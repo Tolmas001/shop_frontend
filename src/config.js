@@ -1,5 +1,5 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://shop-backend-mu-lemon.vercel.app/api';
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://shop-backend-mu-lemon.vercel.app';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://shop-backend-blci.onrender.com/api';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://shop-backend-blci.onrender.com';
 
 export const config = {
   apiUrl: API_BASE_URL.endsWith('/') ? API_BASE_URL : `${API_BASE_URL}/`,
