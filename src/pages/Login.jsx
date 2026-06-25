@@ -1,3 +1,4 @@
+import { config } from '../config';
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -18,17 +19,32 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    // ---- Simple client‑side validation ----
+    if (form.username.trim().length < 3) {
+      setError('Username must be at least 3 characters');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      setError('Invalid email address');
+      return;
+    }
+    if (form.password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
     try {
       if (isRegister) {
         await register(form.username, form.email, form.password);
       } else {
         await login(form.username, form.password);
       }
-      
       const redirectPath = searchParams.get('redirect') || '/';
       navigate(redirectPath);
     } catch (err) {
-      setError(err.response?.data?.error || t('error_occurred'));
+      const msg = err.response?.data?.error || err.message || t('error_occurred');
+      setError(msg);
     }
   };
 

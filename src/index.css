@@ -565,7 +565,7 @@ input:focus, textarea:focus, select:focus {
   right: -320px;
   width: 320px;
   height: 100vh;
-  background: var(--surface);
+  background: #ffffff;
   z-index: 5000;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
@@ -1943,8 +1943,7 @@ input:focus, textarea:focus, select:focus {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 2500;
 }
 
@@ -1954,7 +1953,7 @@ input:focus, textarea:focus, select:focus {
   right: -100%;
   width: min(320px, 80vw);
   height: 100vh;
-  background: var(--surface);
+  background: #ffffff;
   z-index: 4000;
   transition: right 0.3s ease;
   padding: 40px 24px;

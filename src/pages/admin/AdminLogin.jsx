@@ -16,7 +16,7 @@ const AdminLogin = () => {
     setError('');
     try {
       await login(form.username, form.password);
-      navigate('/admin');
+      setTimeout(() => navigate('/admin'), 100);
     } catch (err) {
       setError(err.response?.data?.error || t('error_auth'));
     }
