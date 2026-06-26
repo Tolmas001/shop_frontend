@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
+import InfoSection from '../components/InfoSection';
 import { products, categories as apiCategories, ads } from '../api';
 import { useApp } from '../context/AppContext';
 import Skeleton from '../components/Skeleton';
@@ -464,46 +465,7 @@ const Home = () => {
       </section>
 
       {/* Information Section */}
-      <section id="info" className="container section info-section-modern">
-        <div className="info-grid-modern">
-          <div id="faq" className="info-item-modern">
-            <h2 className="section-title-small" style={{ marginBottom: '24px' }}>FAQ</h2>
-            <div className="faq-accordions">
-              {[
-                { q: "Qanday qilib buyurtma berish mumkin?", a: "Mahsulotni tanlang, savatga qo'shing va rasmiylashtirish tugmasini bosing. Siz bilan tez orada bog'lanamiz." },
-                { q: "To'lov usullari qanday?", a: "Biz Click, Payme va naqd pul orqali to'lovlarni qabul qilamiz. Yaqin orada onlayn karta orqali to'lov ham yo'lga qo'yiladi." },
-                { q: "Yetkazib berish qancha vaqt oladi?", a: "Toshkent shahri bo'ylab 24 soat ichida, viloyatlarga esa 2-3 kun ichida yetkazib beriladi." },
-                { q: "Mahsulotni qaytarish mumkinmi?", a: "Ha, mahsulotda nuqson bo'lsa yoki tavsifga mos kelmasa, 24 soat ichida qaytarishingiz mumkin." }
-              ].map((item, i) => <FAQItem key={i} question={item.q} answer={item.a} />)}
-            </div>
-          </div>
-
-          <div id="shipping" className="info-item-modern">
-            <h2 className="section-title-small">Yetkazib berish</h2>
-            <p>O'zbekiston bo'ylab 24 soat ichida yetkazib beramiz. Toshkent shahri ichida yetkazib berish bepul.</p>
-          </div>
-
-          <div id="returns" className="info-item-modern">
-            <h2 className="section-title-small">Qaytarish</h2>
-            <p>Mahsulotni 24 soat ichida qaytarish yoki almashtirish imkoniyati mavjud (agar nuqson bo'lsa).</p>
-          </div>
-
-          <div id="privacy" className="info-item-modern">
-            <h2 className="section-title-small">Maxfiylik</h2>
-            <p>Sizning ma'lumotlaringiz biz bilan xavfsiz. Biz hech qachon shaxsiy ma'lumotlarni uchinchi shaxslarga bermaymiz.</p>
-          </div>
-
-          <div id="careers" className="info-item-modern">
-            <h2 className="section-title-small">Karyera</h2>
-            <p>Biz bilan birga kelajakni quring. Yangi bo'sh ish o'rinlari uchun CV-ingizni yuboring.</p>
-          </div>
-
-          <div id="news" className="info-item-modern">
-            <h2 className="section-title-small">Blog</h2>
-            <p>Dunyodagi eng so'nggi texnologik yangiliklar va maslahatlar bizning blogimizda.</p>
-          </div>
-        </div>
-      </section>
+      <InfoSection />
 
       {/* Newsletter Section */}
       <section id="contact" className="container section newsletter-wrapper">
@@ -517,42 +479,6 @@ const Home = () => {
           </form>
         </div>
       </section>
-    </div>
-  );
-};
-
-const FAQItem = ({ question, answer }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  return (
-    <div style={{ borderBottom: '1px solid #eee', marginBottom: '8px' }}>
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        style={{ 
-          width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-          padding: '20px 0', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer' 
-        }}
-      >
-        <span style={{ fontSize: '16px', fontWeight: 600 }}>{question}</span>
-        <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
-          <ChevronDown size={20} color="var(--primary)" />
-        </motion.div>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{ overflow: 'hidden' }}
-          >
-            <p style={{ paddingBottom: '20px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
-              {answer}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
