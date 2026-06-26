@@ -3981,6 +3981,63 @@ input:focus, textarea:focus, select:focus {
   }
 }
 
+@media (max-width: 768px) {
+  .glass,
+  .glass-1,
+  .glass-2,
+  .glass-3,
+  .glass-t1,
+  .glass-t2,
+  .glass-t3,
+  .glass-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  .btn-outline,
+  .btn-danger {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .floating-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #ffffff !important;
+  }
+
+  .table th,
+  .table tbody tr:hover td {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .sidebar a:hover,
+  .sidebar a.active {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .modal-overlay,
+  .drawer-overlay,
+  .catalog-backdrop,
+  .filter-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .navbar {
+    background: #ffffff !important;
+  }
+
+  .banner-content {
+    background: #ffffff !important;
+  }
+}
+
 @media (max-width: 480px) {
   .products-grid, .products-grid-modern {
     grid-template-columns: 1fr !important;
