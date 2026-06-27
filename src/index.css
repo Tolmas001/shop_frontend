@@ -2297,10 +2297,9 @@ input:focus, textarea:focus, select:focus {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: #ffffff;
+  color: var(--text-main);
+  /* removed backdrop blur */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2309,6 +2308,7 @@ input:focus, textarea:focus, select:focus {
 
 .modal-content {
   background: var(--surface);
+  color: var(--text-main);
   border-radius: var(--radius-lg);
   padding: 32px;
   width: 90%;
