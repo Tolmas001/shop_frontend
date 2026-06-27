@@ -1278,23 +1278,18 @@ input:focus, textarea:focus, select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0F172A;
-  /* Slate 900 */
-  background-image:
-    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.1) 0px, transparent 50%);
+  background: #FFFFFF;
 }
 
 .admin-login-container {
-  background: #1E293B;
-  /* Slate 800 */
+  background: #FFFFFF;
   width: 100%;
   max-width: 420px;
   padding: 48px;
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  color: white;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+  color: #111827;
 }
 
 .admin-login-header {
@@ -1316,30 +1311,30 @@ input:focus, textarea:focus, select:focus {
 
 .admin-login-header h1 {
   font-size: 28px;
-  color: white;
+  color: #111827;
   margin-bottom: 8px;
 }
 
 .admin-login-header p {
-  color: #94A3B8;
+  color: #4B5563;
   font-size: 14px;
 }
 
 .admin-login-container .form-group label {
-  color: #94A3B8;
+  color: #374151;
   display: flex;
   align-items: center;
 }
 
 .admin-login-container .form-group input {
-  background: #0F172A;
-  border: 1.5px solid #334155;
-  color: white;
+  background: #F9FAFB;
+  border: 1.5px solid #D1D5DB;
+  color: #111827;
 }
 
 .admin-login-container .form-group input:focus {
   border-color: var(--primary);
-  background: #0F172A;
+  background: #FFFFFF;
 }
 
 .admin-login-container .btn-primary {

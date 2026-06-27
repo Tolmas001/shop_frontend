@@ -80,10 +80,10 @@ const AdminLogin = () => {
           </motion.button>
         </form>
 
-        <div className="divider" style={{ margin: '2rem 0', display: 'flex', alignItems: 'center', color: 'rgba(255,255,255,0.1)', fontSize: '0.9rem' }}>
-          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)', opacity: 0.2 }}></div>
-          <span style={{ margin: '0 1rem', color: 'var(--text-muted)' }}>yoki</span>
-          <div style={{ flex: 1, height: '1px', background: 'var(--border-color)', opacity: 0.2 }}></div>
+        <div className="divider" style={{ margin: '2rem 0', display: 'flex', alignItems: 'center', color: '#9CA3AF', fontSize: '0.9rem' }}>
+          <div style={{ flex: 1, height: '1px', background: '#E5E7EB' }}></div>
+          <span style={{ margin: '0 1rem', color: '#4B5563' }}>yoki</span>
+          <div style={{ flex: 1, height: '1px', background: '#E5E7EB' }}></div>
         </div>
 
         <button 
@@ -98,9 +98,9 @@ const AdminLogin = () => {
             gap: '12px',
             padding: '12px',
             borderRadius: '16px',
-            border: '1px solid var(--border-color)',
-            background: 'rgba(255,255,255,0.05)',
-            color: 'var(--text-main)',
+            border: '1px solid #D1D5DB',
+            background: '#FFFFFF',
+            color: '#111827',
             cursor: 'pointer',
             fontWeight: '600',
             height: '52px'
@@ -116,7 +116,7 @@ const AdminLogin = () => {
         </button>
 
         <div style={{ marginTop: '24px', textAlign: 'center' }}>
-          <a href="/" style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
+          <a href="/" style={{ fontSize: '14px', color: '#4B5563' }}>
             &larr; Saytga qaytish
           </a>
         </div>
