@@ -14,7 +14,7 @@ import ActivityLogs from './ActivityLogs';
 import AdminPromoCodes from './PromoCodes';
 import AdminAds from './Ads';
 
-import { 
+import {
   MessageSquare,
   DollarSign,
   TrendingDown,
@@ -36,16 +36,16 @@ import {
   Image as ImageIcon
 } from 'lucide-react';
 
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
-  PieChart, 
-  Pie, 
+  PieChart,
+  Pie,
   Cell,
   BarChart,
   Bar,
@@ -69,63 +69,91 @@ const AdminDashboard = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  const getStatStyles = (type) => {
+    const map = {
+      revenue: { accent: '#10B981', bg: 'rgba(16, 185, 129, 0.1)', icon: TrendingUp },
+      orders: { accent: '#3B82F6', bg: 'rgba(59, 130, 246, 0.1)', icon: ShoppingBag },
+      pending: { accent: '#F59E0B', bg: 'rgba(245, 158, 11, 0.1)', icon: AlertCircle },
+      products: { accent: '#8B5CF6', bg: 'rgba(139, 92, 246, 0.1)', icon: Box },
+    };
+    return map[type] || map.revenue;
+  };
+
+  const statConfigs = [
+    { key: 'revenue', label: 'Umumiy Daromad', value: statsData?.totalRevenue?.toLocaleString(), suffix: "so'm", type: 'revenue' },
+    { key: 'orders', label: 'Buyurtmalar', value: statsData?.totalOrders, suffix: '', type: 'orders' },
+    { key: 'pending', label: 'Kutilayotgan', value: statsData?.pendingOrders, suffix: '', type: 'pending' },
+    { key: 'products', label: 'Mahsulotlar', value: statsData?.totalProducts, suffix: '', type: 'products' },
+  ];
+
   return (
     <div className="admin-layout">
-      <div className="sidebar">
-        <h2>Admin Panel</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <Link to="/admin" className={isActive('/admin') ? 'sidebar-item active' : 'sidebar-item'}>
-            <LayoutDashboard size={20} /> Bosh sahifa
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <div className="sidebar-brand">
+            <div className="sidebar-brand-icon">
+              <ShieldCheck size={22} color="white" />
+            </div>
+            Admin Panel
+          </div>
+        </div>
+
+        <nav className="sidebar-nav">
+          <Link to="/admin" className={`sidebar-item ${isActive('/admin') ? 'active' : ''}`}>
+            <LayoutDashboard size={19} /> Bosh sahifa
           </Link>
-          <Link to="/admin/products" className={isActive('/admin/products') ? 'sidebar-item active' : 'sidebar-item'}>
-            <Box size={20} /> Mahsulotlar
+          <Link to="/admin/products" className={`sidebar-item ${isActive('/admin/products') ? 'active' : ''}`}>
+            <Box size={19} /> Mahsulotlar
           </Link>
-          <Link to="/admin/categories" className={isActive('/admin/categories') ? 'sidebar-item active' : 'sidebar-item'}>
-            <Layers size={20} /> Kategoriyalar
+          <Link to="/admin/categories" className={`sidebar-item ${isActive('/admin/categories') ? 'active' : ''}`}>
+            <Layers size={19} /> Kategoriyalar
           </Link>
-          <Link to="/admin/orders" className={isActive('/admin/orders') ? 'sidebar-item active' : 'sidebar-item'}>
-            <ClipboardList size={20} /> Buyurtmalar
+          <Link to="/admin/orders" className={`sidebar-item ${isActive('/admin/orders') ? 'active' : ''}`}>
+            <ClipboardList size={19} /> Buyurtmalar
           </Link>
-          <Link to="/admin/users" className={isActive('/admin/users') ? 'sidebar-item active' : 'sidebar-item'}>
-            <Users size={20} /> Foydalanuvchilar
+          <Link to="/admin/users" className={`sidebar-item ${isActive('/admin/users') ? 'active' : ''}`}>
+            <Users size={19} /> Foydalanuvchilar
           </Link>
-          <Link to="/admin/reviews" className={isActive('/admin/reviews') ? 'sidebar-item active' : 'sidebar-item'}>
-            <MessageSquare size={20} /> Sharhlar
+          <Link to="/admin/reviews" className={`sidebar-item ${isActive('/admin/reviews') ? 'active' : ''}`}>
+            <MessageSquare size={19} /> Sharhlar
           </Link>
-          <Link to="/admin/promo" className={isActive('/admin/promo') ? 'sidebar-item active' : 'sidebar-item'}>
-            <Ticket size={20} /> Promo-kodlar
+          <Link to="/admin/promo" className={`sidebar-item ${isActive('/admin/promo') ? 'active' : ''}`}>
+            <Ticket size={19} /> Promo-kodlar
           </Link>
-          <Link to="/admin/ads" className={isActive('/admin/ads') ? 'sidebar-item active' : 'sidebar-item'}>
-            <ImageIcon size={20} /> Reklamalar
+          <Link to="/admin/ads" className={`sidebar-item ${isActive('/admin/ads') ? 'active' : ''}`}>
+            <ImageIcon size={19} /> Reklamalar
           </Link>
-          
+
           {user?.role === 'superadmin' && (
             <>
-              <div style={{ padding: '20px 20px 10px', color: '#4B5563', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase' }}>Super Admin</div>
-              <Link to="/admin/management" className={isActive('/admin/management') ? 'sidebar-item active' : 'sidebar-item'}>
-                <ShieldCheck size={20} /> Adminlar
+              <div className="sidebar-divider">Super Admin</div>
+              <Link to="/admin/management" className={`sidebar-item ${isActive('/admin/management') ? 'active' : ''}`}>
+                <ShieldCheck size={19} /> Adminlar
               </Link>
-              <Link to="/admin/logs" className={isActive('/admin/logs') ? 'sidebar-item active' : 'sidebar-item'}>
-                <History size={20} /> Audit Loglari
+              <Link to="/admin/logs" className={`sidebar-item ${isActive('/admin/logs') ? 'active' : ''}`}>
+                <History size={19} /> Audit Loglari
               </Link>
             </>
           )}
+        </nav>
 
-          <Link to="/" className="sidebar-item" style={{ marginTop: '40px', color: '#9CA3AF' }}>
-            <ArrowLeft size={20} /> Saytga qaytish
+        <div className="sidebar-footer">
+          <Link to="/" className="sidebar-item" style={{ color: '#64748B' }}>
+            <ArrowLeft size={19} /> Saytga qaytish
           </Link>
         </div>
-      </div>
-      
-      <div className="admin-content" style={{ overflowY: 'auto' }}>
+      </aside>
+
+      <main className="admin-content">
         <div className="container" style={{ padding: '40px 0' }}>
-          <div className="admin-header" style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
-            <div>
-              <h1 style={{ fontSize: '32px', margin: 0 }}>Xush kelibsiz, {user?.username}</h1>
-              <p style={{ color: '#6B7280', marginTop: '4px' }}>Bugungi holat va statistikani kuzatib boring.</p>
-            </div>
-            <button 
-              className="btn btn-secondary" 
+          <div className="admin-header" style={{ marginBottom: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              <h1 style={{ fontSize: '28px', fontWeight: 800, margin: 0, color: 'var(--text-main)' }}>Xush kelibsiz, {user?.username}</h1>
+              <p style={{ color: '#64748B', marginTop: '4px', fontSize: '15px' }}>Bugungi holat va statistikani kuzatib boring.</p>
+            </motion.div>
+            <button
+              className="btn btn-secondary"
+              style={{ borderRadius: '14px', fontSize: '14px', padding: '12px 24px' }}
               onClick={async () => {
                 try {
                   const { demo } = await import('../../api');
@@ -140,71 +168,65 @@ const AdminDashboard = () => {
               Demo Ma'lumot Qushish
             </button>
           </div>
-          
+
           <Routes>
             <Route path="/" element={
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 {statsData && (
                   <>
-                    <div className="stats-grid" style={{ 
-                      display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', marginBottom: '40px' 
+                    <div className="stats-grid" style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                      gap: '20px',
+                      marginBottom: '32px'
                     }}>
-                      <div className="glass-card stat-card-premium">
-                        <div style={{ color: '#2563EB', marginBottom: '16px', opacity: 0.8 }}><TrendingUp size={24} /></div>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>Umumiy Daromad</p>
-                        <h3 style={{ fontSize: '28px', margin: '8px 0 0 0' }}>{statsData.totalRevenue?.toLocaleString()} <span style={{fontSize: '14px'}}>so'm</span></h3>
-                      </div>
-                      <div className="glass-card stat-card-premium">
-                        <div style={{ color: '#D97706', marginBottom: '16px', opacity: 0.8 }}><ShoppingBag size={24} /></div>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>Buyurtmalar</p>
-                        <h3 style={{ fontSize: '28px', margin: '8px 0 0 0' }}>{statsData.totalOrders}</h3>
-                      </div>
-                      <div className="glass-card stat-card-premium">
-                        <div style={{ color: '#DC2626', marginBottom: '16px', opacity: 0.8 }}><AlertCircle size={24} /></div>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>Kutilayotgan</p>
-                        <h3 style={{ fontSize: '28px', margin: '8px 0 0 0' }}>{statsData.pendingOrders}</h3>
-                      </div>
-                      <div className="glass-card stat-card-premium">
-                        <div style={{ color: '#059669', marginBottom: '16px', opacity: 0.8 }}><Box size={24} /></div>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>Mahsulotlar</p>
-                        <h3 style={{ fontSize: '28px', margin: '8px 0 0 0' }}>{statsData.totalProducts}</h3>
-                      </div>
+                      {statConfigs.map((cfg) => {
+                        const styles = getStatStyles(cfg.type);
+                        const Icon = styles.icon;
+                        return (
+                          <div key={cfg.key} className="stat-card-premium" style={{ '--stat-accent': styles.accent, '--stat-bg': styles.bg }}>
+                            <div className="stat-icon-wrap">
+                              <Icon size={22} />
+                            </div>
+                            <p>{cfg.label}</p>
+                            <h3>{cfg.value}{cfg.suffix && <span style={{ fontSize: '14px', fontWeight: 500, marginLeft: '4px', color: '#64748B' }}>{cfg.suffix}</span>}</h3>
+                          </div>
+                        );
+                      })}
                     </div>
 
-                    <div className="glass-card broadcast-section" style={{ marginBottom: '40px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-                        <Bell size={24} color="var(--primary)" />
+                    <div className="broadcast-section" style={{ marginBottom: '32px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                        <Bell size={22} style={{ color: '#3B82F6' }} />
                         <h3 style={{ margin: 0 }}>Xabarnoma yuborish (Broadcast)</h3>
                       </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px 150px', gap: '16px', alignItems: 'flex-end' }}>
-                        <div className="form-group" style={{ margin: 0 }}>
-                          <label style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Xabar matni</label>
-                          <input 
-                            type="text" 
+                      <div className="broadcast-form-row">
+                        <div className="form-group">
+                          <label>Xabar matni</label>
+                          <input
+                            type="text"
                             value={broadcastForm.message}
                             onChange={(e) => setBroadcastForm({ ...broadcastForm, message: e.target.value })}
                             placeholder="Mijozlar uchun yangilik yoki xabar..."
                             className="form-control"
-                            style={{ width: '100%' }}
                           />
                         </div>
-                        <div className="form-group" style={{ margin: 0 }}>
-                          <label style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Turi</label>
-                          <select 
+                        <div className="form-group">
+                          <label>Turi</label>
+                          <select
                             className="form-control"
                             value={broadcastForm.type}
                             onChange={(e) => setBroadcastForm({ ...broadcastForm, type: e.target.value })}
-                            style={{ width: '100%' }}
                           >
-                            <option value="info">Ma'lumot (Info)</option>
-                            <option value="success">Muvaffaqiyat (Success)</option>
-                            <option value="warning">Ogohlantirish (Warning)</option>
-                            <option value="urgent">Muhim (Urgent)</option>
+                            <option value="info">Ma'lumot</option>
+                            <option value="success">Muvaffaqiyat</option>
+                            <option value="warning">Ogohlantirish</option>
+                            <option value="urgent">Muhim</option>
                           </select>
                         </div>
-                        <button 
-                          className="btn btn-primary" 
-                          style={{ height: '48px' }}
+                        <button
+                          className="btn btn-primary"
+                          style={{ height: '48px', borderRadius: '14px' }}
                           disabled={isSending || !broadcastForm.message}
                           onClick={async () => {
                             setIsSending(true);
@@ -224,42 +246,43 @@ const AdminDashboard = () => {
                       </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', marginBottom: '40px' }}>
-                      <div className="glass-card charts-area">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                    <div className="dashboard-grid-2" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '32px' }}>
+                      <div className="charts-area">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                           <h3 style={{ margin: 0 }}>Sotuvlar Trendi</h3>
-                          <TrendingUp size={20} color="var(--primary)" />
+                          <TrendingUp size={20} color="#3B82F6" />
                         </div>
                         <div style={{ height: '300px', width: '100%' }}>
                           <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={statsData.revenueTrend}>
                               <defs>
                                 <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor="#2563EB" stopOpacity={0.1}/>
-                                  <stop offset="95%" stopColor="#2563EB" stopOpacity={0}/>
+                                  <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.15}/>
+                                  <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
                                 </linearGradient>
                               </defs>
-                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f1f1" />
+                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                               <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94A3B8' }} dy={10} />
                               <YAxis hide />
-                              <Tooltip 
-                                contentStyle={{ 
-                                  background: 'rgba(255,255,255,0.8)', 
-                                  backdropFilter: 'blur(10px)',
-                                  borderRadius: '16px', 
-                                  border: '1px solid rgba(255,255,255,0.4)', 
-                                  boxShadow: '0 10px 30px rgba(0,0,0,0.1)' 
+                              <Tooltip
+                                contentStyle={{
+                                  background: 'rgba(255,255,255,0.95)',
+                                  backdropFilter: 'blur(12px)',
+                                  borderRadius: '14px',
+                                  border: '1px solid #E2E8F0',
+                                  boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                                  padding: '12px 16px'
                                 }}
                                 formatter={(value) => [`${value.toLocaleString()} so'm`, 'Daromad']}
                               />
-                              <Area type="monotone" dataKey="val" stroke="#2563EB" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" />
+                              <Area type="monotone" dataKey="val" stroke="#3B82F6" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" />
                             </AreaChart>
                           </ResponsiveContainer>
                         </div>
                       </div>
 
-                      <div className="glass-card status-donut">
-                        <h3 style={{ margin: '0 0 32px 0' }}>Holatlar</h3>
+                      <div className="status-donut">
+                        <h3 style={{ margin: '0 0 20px 0' }}>Holatlar</h3>
                         <div style={{ height: '220px', width: '100%' }}>
                           <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
@@ -269,14 +292,15 @@ const AdminDashboard = () => {
                                 cy="50%"
                                 innerRadius={60}
                                 outerRadius={80}
-                                paddingAngle={5}
+                                paddingAngle={4}
                                 dataKey="count"
                                 nameKey="label"
+                                stroke="none"
                               >
                                 {statsData.statusDistribution.map((entry, index) => (
                                   <Cell key={"cell-" + index} fill={
-                                    entry.label === 'delivered' ? '#10B981' : 
-                                    (entry.label === 'pending' ? '#F59E0B' : 
+                                    entry.label === 'delivered' ? '#10B981' :
+                                    (entry.label === 'pending' ? '#F59E0B' :
                                     (entry.label === 'cancelled' ? '#EF4444' : '#6366F1'))
                                   } />
                                 ))}
@@ -285,12 +309,13 @@ const AdminDashboard = () => {
                             </PieChart>
                           </ResponsiveContainer>
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginTop: '20px' }}>
+                        <div className="status-legend">
                           {statsData.statusDistribution.map((stat, i) => (
-                            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px' }}>
-                              <div style={{ 
-                                width: '8px', height: '8px', borderRadius: '50%',
-                                background: stat.label === 'delivered' ? '#10B981' : (stat.label === 'pending' ? '#F59E0B' : '#6366F1')
+                            <div key={i} className="status-legend-item">
+                              <div className="status-legend-dot" style={{
+                                background: stat.label === 'delivered' ? '#10B981' :
+                                  (stat.label === 'pending' ? '#F59E0B' :
+                                  (stat.label === 'cancelled' ? '#EF4444' : '#6366F1'))
                               }}></div>
                               <span style={{ textTransform: 'capitalize' }}>{stat.label}</span>
                             </div>
@@ -299,29 +324,38 @@ const AdminDashboard = () => {
                       </div>
                     </div>
 
-                    <div className="glass-card charts-area" style={{ marginBottom: '40px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                    <div className="charts-area" style={{ marginBottom: '32px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                         <h3 style={{ margin: 0 }}>Eng ko'p saqlangan mahsulotlar (Wishlist)</h3>
                         <Heart size={20} color="#EF4444" />
                       </div>
                       <div style={{ height: '300px', width: '100%' }}>
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart data={statsData.popularWishlist}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
-                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: 'var(--text-muted)' }} />
-                            <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--text-muted)' }} />
-                            <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)' }} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748B' }} />
+                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748B' }} />
+                            <Tooltip
+                              contentStyle={{
+                                background: 'rgba(255,255,255,0.95)',
+                                backdropFilter: 'blur(12px)',
+                                borderRadius: '14px',
+                                border: '1px solid #E2E8F0',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                                padding: '12px 16px'
+                              }}
+                            />
                             <Bar dataKey="wishlist_count" fill="#EC4899" radius={[10, 10, 0, 0]} />
                           </BarChart>
                         </ResponsiveContainer>
                       </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
-                      <div style={{ background: 'white', padding: '32px', borderRadius: '24px', border: '1px solid #f1f1f1', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                    <div className="dashboard-grid-2" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
+                      <div className="admin-table-card">
+                        <div className="table-header-row">
                           <h3 style={{ margin: 0 }}>Oxirgi Buyurtmalar</h3>
-                          <Link to="/admin/orders" style={{ color: 'var(--primary)', fontSize: '14px', fontWeight: 600 }}>Barchasini ko'rish</Link>
+                          <Link to="/admin/orders" className="view-all">Barchasini ko'rish →</Link>
                         </div>
                         <div className="table-responsive">
                           <table className="table">
@@ -337,16 +371,12 @@ const AdminDashboard = () => {
                             <tbody>
                               {statsData.recentOrders?.map(order => (
                                 <tr key={order.id}>
-                                  <td>#{order.id}</td>
+                                  <td style={{ fontWeight: 600, color: 'var(--text-muted)' }}>#{order.id}</td>
                                   <td style={{ fontWeight: 600 }}>{order.customer_name}</td>
-                                  <td style={{ color: '#6B7280' }}>{new Date(order.created_at).toLocaleDateString()}</td>
+                                  <td style={{ color: '#64748B' }}>{new Date(order.created_at).toLocaleDateString()}</td>
                                   <td style={{ fontWeight: 700 }}>{order.total_amount?.toLocaleString()} so'm</td>
                                   <td>
-                                    <span style={{ 
-                                      padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase',
-                                      background: order.status === 'delivered' ? '#D1FAE5' : (order.status === 'pending' ? '#FEF3C7' : '#DBEAFE'),
-                                      color: order.status === 'delivered' ? '#059669' : (order.status === 'pending' ? '#D97706' : '#2563EB')
-                                    }}>
+                                    <span className={`status-badge ${order.status}`}>
                                       {order.status}
                                     </span>
                                   </td>
@@ -357,26 +387,26 @@ const AdminDashboard = () => {
                         </div>
                       </div>
 
-                      <div className="low-stock-widget" style={{ background: 'white', padding: '32px', borderRadius: '24px', border: '1px solid #f1f1f1', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-                        <h3 style={{ margin: '0 0 24px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div className="low-stock-widget">
+                        <h3>
                           <TrendingDown size={20} color="#EF4444" /> Kam Qolgan
                         </h3>
                         {statsData.lowStockProducts?.length > 0 ? (
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                             {statsData.lowStockProducts.map(p => (
-                              <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', background: '#FEF2F2', borderRadius: '16px' }}>
-                                <div style={{ flex: 1 }}>
-                                  <div style={{ fontSize: '14px', fontWeight: 600, color: '#991B1B' }}>{p.name}</div>
-                                  <div style={{ fontSize: '12px', color: '#B91C1C' }}>Zaxira: {p.stock_count} dona</div>
+                              <div key={p.id} className="low-stock-item">
+                                <div className="low-stock-item-info">
+                                  <div className="low-stock-item-name">{p.name}</div>
+                                  <div className="low-stock-item-meta">Zaxira: {p.stock_count} dona</div>
                                 </div>
                                 <Link to="/admin/products" style={{ color: '#DC2626' }}><AlertCircle size={18} /></Link>
                               </div>
                             ))}
                           </div>
                         ) : (
-                          <div style={{ textAlign: 'center', padding: '40px 0', color: '#94A3B8' }}>
-                            <CheckCircle size={32} style={{ marginBottom: '12px', opacity: 0.5 }} />
-                            <p style={{ fontSize: '14px' }}>Hamma mahsulot yetarli</p>
+                          <div className="no-low-stock">
+                            <CheckCircle size={32} />
+                            <p>Hamma mahsulot yetarli</p>
                           </div>
                         )}
                       </div>
@@ -396,7 +426,7 @@ const AdminDashboard = () => {
             <Route path="/ads" element={<AdminAds />} />
           </Routes>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

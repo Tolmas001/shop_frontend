@@ -9,22 +9,6 @@
 }
 
 :root {
-  /* Colors - Liquid Glass Palette */
-  --primary: #3b82f6;
-  --primary-glow: rgba(59, 130, 246, 0.4);
-  --secondary: #8b5cf6;
-  --background: #f1f5f9;
-  
-  /* Solid surface tiers */
-  --glass-t1-bg: #ffffff;
-  --glass-t1-blur: 0px;
-  --glass-t2-bg: #ffffff;
-  --glass-t2-blur: 0px;
-  --glass-t3-bg: #ffffff;
-  --glass-t3-blur: 0px;
-  
-  --glass-border: #e5e7eb;
-  --glass-glow: none;
   
   --text-main: #0f172a;
   --text-muted: #475569;
@@ -424,77 +408,25 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Ultra Glass Tiers */
-.glass-t1 {
-  background: var(--glass-t1-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
-  box-shadow: 
-    0 40px 100px rgba(0, 0, 0, 0.2),
-    inset 0 1px 2px rgba(255, 255, 255, 0.4);
-}
 
-.glass-t2 {
-  background: var(--glass-t2-bg);
-  border: 1px solid #e5e7eb;
-  border-radius: var(--radius-lg);
-  box-shadow: 
-    0 20px 50px rgba(0, 0, 0, 0.1),
-    inset 0 1px 1px rgba(255, 255, 255, 0.5);
-}
 
-.glass-t3 {
-  background: var(--glass-t3-bg);
-  border: 1px solid #e5e7eb;
-  border-radius: var(--radius-md);
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0.5px rgba(255, 255, 255, 0.6);
-}
 
-.glass-card {
-  background: var(--glass-t2-bg);
-  border-radius: var(--radius-lg);
-  border: 1px solid #e5e7eb;
-  padding: 32px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
-}
 
-.glass-card:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-}
-.glass-1 {
-  background: linear-gradient(135deg, rgba(255, 248, 235, 0.4), rgba(255, 248, 235, 0.15));
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 10px 30px rgba(184, 150, 100, 0.2);
-}
 
-.glass-2 {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.5));
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  color: white;
-}
 
-.glass-3 {
-  background: linear-gradient(135deg, rgba(147, 197, 253, 0.4), rgba(30, 64, 175, 0.2));
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
-}
+
+
+
+
+
+
+
+
 
 /* Pulse Glow Effect for Premium Buttons */
-@keyframes glass-glow {
-  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
-}
 
-.btn-primary.glow {
-  animation: glass-glow 2s infinite;
-}
+
+
 
 /* Liquid Bubble Animations */
 @keyframes bubble-float {
