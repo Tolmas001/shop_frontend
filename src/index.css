@@ -2347,11 +2347,14 @@ input:focus, textarea:focus, select:focus {
   background-clip: text;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+
+
+/* ==== New Card Utility ==== */
+.card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
 }
 
 .floating-anim {
@@ -4529,20 +4532,6 @@ input:focus, textarea:focus, select:focus {
 
 @media (max-width: 768px) {
   .glass,
-  .glass-1,
-  .glass-2,
-  .glass-3,
-  .glass-t1,
-  .glass-t2,
-  .glass-t3,
-  .glass-card {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: #ffffff !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
-    border: 1px solid #e5e7eb !important;
-  }
-
   .btn-outline,
   .btn-danger {
     backdrop-filter: none !important;
