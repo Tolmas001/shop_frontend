@@ -67,6 +67,13 @@ export const orders = {
   oneClickBuy: (data) => api.post('orders/one-click', data),
   updateStatus: (id, status) => api.put(`orders/${id}/status`, { status }),
   cancel: (id) => api.put(`orders/${id}/cancel`),
+  uploadReceipt: (id, file) => {
+    const formData = new FormData();
+    formData.append('receipt', file);
+    return api.post(`orders/${id}/upload-receipt`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
 };
 
 export const stats = {
@@ -77,6 +84,9 @@ export const admin = {
   getUsers: () => api.get('users'),
   deleteUser: (id) => api.delete(`users/${id}`),
   deleteReview: (productId, index) => api.delete(`products/${productId}/comments/${index}`),
+  getPendingPayments: () => api.get('admin/payments/pending'),
+  approvePayment: (id) => api.patch(`admin/orders/${id}/approve`),
+  rejectPayment: (id) => api.patch(`admin/orders/${id}/reject`),
 };
 
 export const promo = {

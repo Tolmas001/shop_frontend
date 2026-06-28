@@ -19,6 +19,11 @@ import OrderSuccess from './pages/OrderSuccess';
 import LoginSuccess from './pages/LoginSuccess';
 import DesignSystem from './pages/DesignSystem';
 import GeospatialDashboard from './pages/GeospatialDashboard';
+import Payment from './pages/Payment';
+import PaymentUpload from './pages/PaymentUpload';
+import PaymentStatus from './pages/PaymentStatus';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentRejected from './pages/PaymentRejected';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
@@ -65,6 +70,11 @@ function MainLayout() {
         <Route path="/orders" element={<ProtectedRoute user={user}><Orders /></ProtectedRoute>} />
         <Route path="/order-success/:id" element={<ProtectedRoute user={user}><OrderSuccess /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute user={user}><Profile /></ProtectedRoute>} />
+        <Route path="/payment/:id" element={<ProtectedRoute user={user}><Payment /></ProtectedRoute>} />
+        <Route path="/payment-upload/:id" element={<ProtectedRoute user={user}><PaymentUpload /></ProtectedRoute>} />
+        <Route path="/payment-status/:id" element={<ProtectedRoute user={user}><PaymentStatus /></ProtectedRoute>} />
+        <Route path="/payment-success/:id" element={<ProtectedRoute user={user}><PaymentSuccess /></ProtectedRoute>} />
+        <Route path="/payment-rejected/:id" element={<ProtectedRoute user={user}><PaymentRejected /></ProtectedRoute>} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/blog" element={<BlogList />} />
         <Route path="/blog/:id" element={<BlogDetail />} />

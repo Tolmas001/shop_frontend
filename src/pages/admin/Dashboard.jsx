@@ -13,6 +13,7 @@ import AdminManagement from './AdminManagement';
 import ActivityLogs from './ActivityLogs';
 import AdminPromoCodes from './PromoCodes';
 import AdminAds from './Ads';
+import Payments from './Payments';
 
 import {
   MessageSquare,
@@ -122,6 +123,9 @@ const AdminDashboard = () => {
           </Link>
           <Link to="/admin/ads" className={`sidebar-item ${isActive('/admin/ads') ? 'active' : ''}`}>
             <ImageIcon size={19} /> Reklamalar
+          </Link>
+          <Link to="/admin/payments" className={`sidebar-item ${isActive('/admin/payments') ? 'active' : ''}`}>
+            <DollarSign size={19} /> To'lovlar
           </Link>
 
           {user?.role === 'superadmin' && (
@@ -424,6 +428,7 @@ const AdminDashboard = () => {
             <Route path="/logs" element={<ActivityLogs />} />
             <Route path="/promo" element={<AdminPromoCodes />} />
             <Route path="/ads" element={<AdminAds />} />
+            <Route path="/payments" element={<Payments />} />
           </Routes>
         </div>
       </main>

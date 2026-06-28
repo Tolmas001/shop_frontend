@@ -13,7 +13,7 @@ const Checkout = () => {
     customer_phone: user?.phone || '', 
     customer_address: '' 
   });
-  const [paymentMethod, setPaymentMethod] = useState('cash'); // 'cash' or 'card'
+  const [paymentMethod, setPaymentMethod] = useState('manual'); // 'manual' or 'card'
   const [deliveryMethod, setDeliveryMethod] = useState('standard');
   const [cardInfo, setCardInfo] = useState({ number: '', expiry: '', cvv: '' });
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -46,9 +46,16 @@ const Checkout = () => {
         use_points: usePoints,
         items: cart.map(item => ({ id: item.id, quantity: item.quantity, price: item.price }))
       });
-      clearCart();
-      setMessage('✅ Buyurtma muvaffaqiyatli qabul qilindi!');
-      setTimeout(() => navigate(`/order-success/${res.data.order_id}`), 1500);
+      
+      if (paymentMethod === 'manual') {
+        clearCart();
+        setMessage('✅ Buyurtma muvaffaqiyatli qabul qilindi!');
+        setTimeout(() => navigate(`/payment/${res.data.order_id}`), 1500);
+      } else {
+        clearCart();
+        setMessage('✅ Buyurtma muvaffaqiyatli qabul qilindi!');
+        setTimeout(() => navigate(`/order-success/${res.data.order_id}`), 1500);
+      }
     } catch (err) {
       setMessage('❌ Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
     } finally {
@@ -247,19 +254,19 @@ const Checkout = () => {
 
           {/* Payment Method */}
           <div style={{ background: 'white', padding: '32px', borderRadius: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid #f1f1f1' }}>
-            <h3 style={{ marginBottom: '24px' }}>To'lov Usuli</h3>
+            <h3 style={{ marginBottom: '24px' }}>To'lov usuli tanlang</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: paymentMethod === 'card' ? '32px' : '0' }}>
               <div 
-                onClick={() => setPaymentMethod('cash')}
+                onClick={() => setPaymentMethod('manual')}
                 style={{ 
                   padding: '20px', borderRadius: '16px', cursor: 'pointer', textAlign: 'center',
-                  border: `2px solid ${paymentMethod === 'cash' ? 'var(--primary)' : '#f1f1f1'}`,
-                  background: paymentMethod === 'cash' ? 'rgba(37, 99, 235, 0.05)' : 'white',
+                  border: `2px solid ${paymentMethod === 'manual' ? 'var(--primary)' : '#f1f1f1'}`,
+                  background: paymentMethod === 'manual' ? 'rgba(37, 99, 235, 0.05)' : 'white',
                   transition: '0.3s'
                 }}
               >
-                <Banknote size={24} color={paymentMethod === 'cash' ? 'var(--primary)' : '#6B7280'} style={{ marginBottom: '8px' }} />
-                <div style={{ fontWeight: 600 }}>Naqd pul</div>
+                <Banknote size={24} color={paymentMethod === 'manual' ? 'var(--primary)' : '#6B7280'} style={{ marginBottom: '8px' }} />
+                <div style={{ fontWeight: 600 }}>Manual transfer</div>
               </div>
 
               <div 
@@ -272,7 +279,7 @@ const Checkout = () => {
                 }}
               >
                 <CreditCard size={24} color={paymentMethod === 'card' ? 'var(--primary)' : '#6B7280'} style={{ marginBottom: '8px' }} />
-                <div style={{ fontWeight: 600 }}>Karta orqali</div>
+                <div style={{ fontWeight: 600 }}>Online card payment</div>
               </div>
             </div>
 
@@ -398,7 +405,7 @@ const Checkout = () => {
               whileTap={{ scale: 0.98 }}
               style={{ width: '100%', padding: '18px', fontSize: '18px' }}
             >
-              {loading ? 'Yuborilmoqda...' : (paymentMethod === 'card' ? 'To\'lash va Buyurtma berish' : 'Buyurtmani Tasdiqlash')}
+              {loading ? 'Yuborilmoqda...' : 'Buyurtma berish'}
             </motion.button>
           </div>
         </motion.form>
