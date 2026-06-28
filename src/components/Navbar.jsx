@@ -215,7 +215,7 @@ const Navbar = () => {
                       />
                     </div>
                   </Link>
-                  {user.role === 'admin' && (
+                  {(user.role === 'admin' || user.role === 'superadmin') && (
                     <Link to="/admin" className="nav-btn" title={t('admin')}>
                       <LayoutDashboard size={22} color="#2563EB" />
                     </Link>
@@ -255,7 +255,7 @@ const Navbar = () => {
           {user ? (
             <div className="drawer-user-card">
               <img 
-                src={user.image ? (user.image.startsWith('http') ? user.image : `http://localhost:5001${user.image}`) : 'https://img.icons8.com/ios-filled/100/2563eb/user-male-circle.png'} 
+                src={user.image ? (user.image.startsWith('http') ? user.image : `${backendUrl}${user.image}`) : 'https://img.icons8.com/ios-filled/100/2563eb/user-male-circle.png'} 
                 alt="Profile" 
                 className="drawer-user-img"
               />
@@ -305,7 +305,7 @@ const Navbar = () => {
               <Link to="/profile" className="drawer-link" onClick={() => setIsMobileMenuOpen(false)}>
                 <User className="drawer-link-icon" size={20} /> {t('profile')}
               </Link>
-              {user.role === 'admin' && (
+              {(user.role === 'admin' || user.role === 'superadmin') && (
                 <Link to="/admin" className="drawer-link" onClick={() => setIsMobileMenuOpen(false)}>
                   <LayoutDashboard className="drawer-link-icon" size={20} /> {t('admin')}
                 </Link>

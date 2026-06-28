@@ -29,6 +29,9 @@ const AdminOrders = () => {
   const getStatusClass = (status) => {
     switch(status) {
       case 'pending': return 'pending';
+      case 'processing': return 'processing';
+      case 'shipped': return 'shipped';
+      case 'delivered': return 'completed';
       case 'completed': return 'completed';
       case 'cancelled': return 'cancelled';
       default: return '';
@@ -38,6 +41,9 @@ const AdminOrders = () => {
   const getStatusLabel = (status) => {
     switch(status) {
       case 'pending': return 'Kutilmoqda';
+      case 'processing': return 'Tayyorlanmoqda';
+      case 'shipped': return 'Yo\'lda';
+      case 'delivered': return 'Yetkazildi';
       case 'completed': return 'Tugallangan';
       case 'cancelled': return 'Bekor qilingan';
       default: return status;
@@ -111,7 +117,9 @@ const AdminOrders = () => {
                     }}
                   >
                     <option value="pending">Kutilmoqda</option>
-                    <option value="completed">Tugallangan</option>
+                    <option value="processing">Tayyorlanmoqda</option>
+                    <option value="shipped">Yo'lda</option>
+                    <option value="delivered">Yetkazildi</option>
                     <option value="cancelled">Bekor qilingan</option>
                   </select>
                 </td>

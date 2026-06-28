@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShoppingBag, Star, Heart, Share2 } from 'lucide-react';
+import { X, ShoppingBag, Star, Heart } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const QuickView = ({ product, onClose }) => {
-  const { addToCart, favorites, toggleFavorite, t } = useApp();
+  const { addToCart, favorites, toggleFavorite, t, backendUrl, handleImageError, formatPrice } = useApp();
 
   const isFavorite = favorites?.some(f => f.id === product.id);
 
@@ -58,9 +58,9 @@ const QuickView = ({ product, onClose }) => {
           <X size={20} />
         </button>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 1fr', minHeight: '500px', maxHeight: '90vh' }}>
+        <div className="quick-view-grid">
           {/* Image Section */}
-          <div style={{ background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px' }}>
+          <div className="quick-view-image-panel">
             <img 
               src={product.image?.startsWith('http') ? product.image : (product.image ? `${backendUrl}${product.image}` : 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800')} 
               onError={handleImageError}
@@ -70,7 +70,7 @@ const QuickView = ({ product, onClose }) => {
           </div>
 
           {/* Info Section */}
-          <div style={{ padding: '48px', display: 'flex', flexDirection: 'column', gap: '24px', overflowY: 'auto' }}>
+          <div className="quick-view-info-panel">
             <div>
               <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                 {product.brand}
@@ -85,7 +85,7 @@ const QuickView = ({ product, onClose }) => {
             </div>
 
             <p style={{ fontSize: '24px', fontWeight: 800, color: 'var(--primary)' }}>
-              {product.price?.toLocaleString()} <span style={{ fontSize: '16px' }}>{t('currency')}</span>
+              {formatPrice(product.price || 0)}
             </p>
 
             <p style={{ color: '#6B7280', fontSize: '15px', lineHeight: 1.6 }}>

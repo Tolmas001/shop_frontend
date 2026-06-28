@@ -25,7 +25,7 @@ const Login = () => {
       setError('Username must be at least 3 characters');
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+    if (isRegister && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       setError('Invalid email address');
       return;
     }
