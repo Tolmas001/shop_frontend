@@ -59,11 +59,16 @@ const AdminDashboard = () => {
   const [statsData, setStatsData] = useState(null);
   const [broadcastForm, setBroadcastForm] = useState({ message: '', type: 'info' });
   const [isSending, setIsSending] = useState(false);
+  const [pendingPaymentsCount, setPendingPaymentsCount] = useState(0);
 
   useEffect(() => {
     if (user?.role === 'admin' || user?.role === 'superadmin') {
       stats.get()
         .then(res => setStatsData(res.data))
+        .catch(() => {});
+      
+      admin.getPendingPayments()
+        .then(res => setPendingPaymentsCount(res.data?.length || 0))
         .catch(() => {});
     }
   }, [user]);
@@ -126,6 +131,7 @@ const AdminDashboard = () => {
           </Link>
           <Link to="/admin/payments" className={`sidebar-item ${isActive('/admin/payments') ? 'active' : ''}`}>
             <DollarSign size={19} /> To'lovlar
+            {pendingPaymentsCount > 0 && <span className="badge" style={{ marginLeft: 'auto', background: '#dc2626' }}>{pendingPaymentsCount}</span>}
           </Link>
 
           {user?.role === 'superadmin' && (
