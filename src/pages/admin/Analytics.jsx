@@ -24,7 +24,7 @@ const Analytics = () => {
           conversionRate: 3.2,
           salesTrend: [
             { date: 'Mon', sales: 12000, orders: 15 },
-            { date: 'Tue', sales:'000, orders: 23 },
+            { date: 'Tue', sales: 18000, orders: 23 },
             { date: 'Wed', sales: 15000, orders: 18 },
             { date: 'Thu', sales: 22000, orders: 28 },
             { date: 'Fri', sales: 28000, orders: 35 },
@@ -254,7 +254,7 @@ const Analytics = () => {
           transition={{ delay: 0.7 }}
           style={{ background: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #f1f1f1', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}
         >
-          <h3 style={{ fontSize: '18px', fontWeight: 700', marginBottom: '20px' }}>Eng ko'p sotilgan mahsulotlar</h3>
+          <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Eng ko'p sotilgan mahsulotlar</h3>
           <div className="table-responsive">
             <table className="table">
               <thead>

@@ -198,17 +198,20 @@ const Support = () => {
               {/* Replies */}
               {ticket.replies.length > 0 && (
                 <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', marginBottom: '16px' }}>
-                  {ticket.replies.map((r, i) => (
-                    <div key={i} style={{ marginBottom: i < ticket.replies.length - 1 ? '12px' : 0', paddingBottom: i < ticket.replies.length - 1 ? '12px' : 0', borderBottom: i < ticket.replies.length - 1 ? '1px solid #e2e8f0' : 'none' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                        <span style={{ fontWeight: 700, fontSize: '12px', color: r.admin ? 'var(--primary)' : 'var(--text-main)' }}>
-                          {r.admin ? 'Admin' : ticket.user}
-                        </span>
-                        <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{new Date(r.time).toLocaleString('uz-UZ')}</span>
+                  {ticket.replies.map((r, i) => {
+                    const isLast = i === ticket.replies.length - 1;
+                    return (
+                      <div key={i} style={{ marginBottom: isLast ? '0' : '12px', paddingBottom: isLast ? '0' : '12px', borderBottom: isLast ? 'none' : '1px solid #e2e8f0' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                          <span style={{ fontWeight: 700, fontSize: '12px', color: r.admin ? 'var(--primary)' : 'var(--text-main)' }}>
+                            {r.admin ? 'Admin' : ticket.user}
+                          </span>
+                          <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{new Date(r.time).toLocaleString('uz-UZ')}</span>
+                        </div>
+                        <p style={{ fontSize: '14px', margin: 0 }}>{r.message}</p>
                       </div>
-                      <p style={{ fontSize: '14px', margin: 0 }}>{r.message}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
 

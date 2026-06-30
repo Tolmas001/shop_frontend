@@ -65,7 +65,7 @@ const PaymentStatus = () => {
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', color: 'var(--text-muted)' }}>
           <Clock size={20} />
-          <span style={{ fontSize: '14px’ }}>Har 5 sekundda avtomatik tekshiriladi</span>
+          <span style={{ fontSize: '14px' }}>Har 5 sekundda avtomatik tekshiriladi</span>
         </div>
 
         <div style={{ marginTop: '32px', padding: '16px', background: '#f8fafc', borderRadius: '12px' }}>
