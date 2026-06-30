@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell, Check, CheckCheck, Trash2, Filter } from 'lucide-react';
+import { Bell, Check, CheckCheck, Trash2, Filter, Package, CreditCard, Star, TrendingDown, User, Settings, AlertCircle, Clock, MoreVertical } from 'lucide-react';
 import { notifications as notifyApi } from '../../api';
 
 const Notifications = () => {
@@ -70,14 +70,15 @@ const Notifications = () => {
 
   const getNotificationIcon = (type) => {
     const icons = {
-      order: '📦',
-      payment: '💳',
-      review: '⭐',
-      stock: '📉',
-      user: '👤',
-      system: '⚙️'
+      order: { icon: Package, color: '#3B82F6', bg: '#EFF6FF' },
+      payment: { icon: CreditCard, color: '#10B981', bg: '#ECFDF5' },
+      review: { icon: Star, color: '#F59E0B', bg: '#FEF3C7' },
+      stock: { icon: TrendingDown, color: '#EF4444', bg: '#FEF2F2' },
+      user: { icon: User, color: '#8B5CF6', bg: '#F5F3FF' },
+      system: { icon: Settings, color: '#64748B', bg: '#F1F5F9' },
+      alert: { icon: AlertCircle, color: '#DC2626', bg: '#FEE2E2' }
     };
-    return icons[type] || '📢';
+    return icons[type] || { icon: Bell, color: '#64748B', bg: '#F1F5F9' };
   };
 
   if (loading) {
@@ -98,7 +99,7 @@ const Notifications = () => {
           <div>
             <h1 style={{ fontSize: '32px', fontWeight: 800, marginBottom: '8px' }}>Bildirishnomalar</h1>
             <p style={{ color: 'var(--text-muted)' }}>
-              {unreadCount > 0 ? `${unreadCount} ta o'qilmagan bildirishnoma` : 'Barcha bildirishnomalar o'qilgan'}
+              {unreadCount > 0 ? `${unreadCount} ta o\'qilmagan bildirishnoma` : 'Barcha bildirishnomalar o\'qilgan'}
             </p>
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
@@ -137,57 +138,85 @@ const Notifications = () => {
         </div>
 
         {/* Notifications List */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {filteredNotifications.length === 0 ? (
-            <div style={{ background: 'white', padding: '60px', borderRadius: '16px', textAlign: 'center', border: '1px solid #f1f1f1' }}>
-              <Bell size={48} color="#94a3b8" style={{ marginBottom: '16px' }} />
-              <p style={{ color: 'var(--text-muted)', fontSize: '18px' }}>Bildirishnomalar yo'q</p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              style={{ background: 'white', padding: '80px 40px', borderRadius: '20px', textAlign: 'center', border: '2px dashed #e2e8f0' }}
+            >
+              <div style={{ width: '80px', height: '80px', background: '#F1F5F9', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                <Bell size={40} color="#94a3b8" />
+              </div>
+              <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '8px', color: 'var(--text-main)' }}>Bildirishnomalar yo'q</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Hozircha sizga yangi bildirishnomalar yo'q</p>
+            </motion.div>
           ) : (
-            filteredNotifications.map((notification) => (
-              <motion.div
-                key={notification.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                style={{
-                  background: 'white',
-                  padding: '20px',
-                  borderRadius: '16px',
-                  border: notification.is_read ? '1px solid #f1f1f1' : '2px solid var(--primary)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                  display: 'flex',
-                  gap: '16px',
-                  alignItems: 'flex-start'
-                }}
-              >
-                <div style={{ fontSize: '32px' }}>{getNotificationIcon(notification.type)}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                    <h4 style={{ fontSize: '16px', fontWeight: 700, margin: 0 }}>{notification.title || 'Bildirishnoma'}</h4>
-                    <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{getTimeAgo(notification.created_at)}</span>
+            filteredNotifications.map((notification, index) => {
+              const iconConfig = getNotificationIcon(notification.type);
+              const IconComponent = iconConfig.icon;
+              return (
+                <motion.div
+                  key={notification.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  whileHover={{ scale: 1.01, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
+                  style={{
+                    background: notification.is_read ? '#F8FAFC' : 'white',
+                    padding: '20px',
+                    borderRadius: '16px',
+                    border: notification.is_read ? '1px solid #e2e8f0' : '2px solid var(--primary)',
+                    boxShadow: notification.is_read ? 'none' : '0 4px 12px rgba(59, 130, 246, 0.1)',
+                    display: 'flex',
+                    gap: '16px',
+                    alignItems: 'flex-start',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onClick={() => !notification.is_read && markAsRead(notification.id)}
+                >
+                  <div style={{ 
+                    width: '48px', 
+                    height: '48px', 
+                    background: iconConfig.bg, 
+                    borderRadius: '12px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    <IconComponent size={24} color={iconConfig.color} />
                   </div>
-                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: '0 0 12px 0' }}>{notification.message}</p>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    {!notification.is_read && (
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', gap: '12px' }}>
+                      <h4 style={{ fontSize: '16px', fontWeight: 700, margin: 0, color: 'var(--text-main)' }}>{notification.title || 'Bildirishnoma'}</h4>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: 'var(--text-muted)', flexShrink: 0 }}>
+                        <Clock size={12} />
+                        {getTimeAgo(notification.created_at)}
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: '0 0 12px 0', lineHeight: '1.5' }}>{notification.message}</p>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      {!notification.is_read && (
+                        <span style={{ padding: '4px 10px', borderRadius: '6px', background: '#EFF6FF', color: '#3B82F6', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                          Yangi
+                        </span>
+                      )}
                       <button
-                        onClick={() => markAsRead(notification.id)}
-                        style={{ padding: '6px 12px', borderRadius: '8px', border: 'none', background: '#ECFDF5', color: '#059669', fontSize: '12px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                        onClick={(e) => { e.stopPropagation(); deleteNotification(notification.id); }}
+                        style={{ padding: '6px 12px', borderRadius: '8px', border: 'none', background: 'transparent', color: '#94A3B8', fontSize: '12px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', transition: '0.2s' }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = '#EF4444'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = '#94A3B8'}
                       >
-                        <Check size={14} />
-                        O'qish
+                        <Trash2 size={14} />
+                        O'chirish
                       </button>
-                    )}
-                    <button
-                      onClick={() => deleteNotification(notification.id)}
-                      style={{ padding: '6px 12px', borderRadius: '8px', border: 'none', background: '#FEF2F2', color: '#DC2626', fontSize: '12px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
-                    >
-                      <Trash2 size={14} />
-                      O'chirish
-                    </button>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))
+                </motion.div>
+              );
+            })
           )}
         </div>
       </motion.div>
