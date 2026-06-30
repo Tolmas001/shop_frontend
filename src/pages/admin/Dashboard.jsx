@@ -14,6 +14,21 @@ import ActivityLogs from './ActivityLogs';
 import AdminPromoCodes from './PromoCodes';
 import AdminAds from './Ads';
 import Payments from './Payments';
+import Analytics from './Analytics';
+import Inventory from './Inventory';
+import Notifications from './Notifications';
+import Delivery from './Delivery';
+import Support from './Support';
+import AbandonedCarts from './AbandonedCarts';
+import Security from './Security';
+import Refunds from './Refunds';
+import CouponsAnalytics from './CouponsAnalytics';
+import WishlistAnalytics from './WishlistAnalytics';
+import SearchAnalytics from './SearchAnalytics';
+import ActivityMonitor from './ActivityMonitor';
+import Vendors from './Vendors';
+import AI from './AI';
+import Backups from './Backups';
 
 import {
   MessageSquare,
@@ -132,6 +147,51 @@ const AdminDashboard = () => {
           <Link to="/admin/payments" className={`sidebar-item ${isActive('/admin/payments') ? 'active' : ''}`}>
             <DollarSign size={19} /> To'lovlar
             {pendingPaymentsCount > 0 && <span className="badge" style={{ marginLeft: 'auto', background: '#dc2626' }}>{pendingPaymentsCount}</span>}
+          </Link>
+          <Link to="/admin/analytics" className={`sidebar-item ${isActive('/admin/analytics') ? 'active' : ''}`}>
+            <TrendingUp size={19} /> Analytics
+          </Link>
+          <Link to="/admin/inventory" className={`sidebar-item ${isActive('/admin/inventory') ? 'active' : ''}`}>
+            <Package size={19} /> Ombor
+          </Link>
+          <Link to="/admin/notifications" className={`sidebar-item ${isActive('/admin/notifications') ? 'active' : ''}`}>
+            <Bell size={19} /> Bildirishnomalar
+          </Link>
+          <Link to="/admin/delivery" className={`sidebar-item ${isActive('/admin/delivery') ? 'active' : ''}`}>
+            <Truck size={19} /> Yetkazib berish
+          </Link>
+          <Link to="/admin/support" className={`sidebar-item ${isActive('/admin/support') ? 'active' : ''}`}>
+            <MessageSquare size={19} /> Support
+          </Link>
+          <Link to="/admin/carts" className={`sidebar-item ${isActive('/admin/carts') ? 'active' : ''}`}>
+            <ShoppingCart size={19} /> Tashlab ketilgan
+          </Link>
+          <Link to="/admin/security" className={`sidebar-item ${isActive('/admin/security') ? 'active' : ''}`}>
+            <Shield size={19} /> Xavfsizlik
+          </Link>
+          <Link to="/admin/refunds" className={`sidebar-item ${isActive('/admin/refunds') ? 'active' : ''}`}>
+            <RotateCcw size={19} /> Qaytarishlar
+          </Link>
+          <Link to="/admin/coupons-analytics" className={`sidebar-item ${isActive('/admin/coupons-analytics') ? 'active' : ''}`}>
+            <BarChart3 size={19} /> Promo statistika
+          </Link>
+          <Link to="/admin/wishlist-analytics" className={`sidebar-item ${isActive('/admin/wishlist-analytics') ? 'active' : ''}`}>
+            <Heart size={19} /> Wishlist statistika
+          </Link>
+          <Link to="/admin/search-analytics" className={`sidebar-item ${isActive('/admin/search-analytics') ? 'active' : ''}`}>
+            <Search size={19} /> Qidirish statistika
+          </Link>
+          <Link to="/admin/activity" className={`sidebar-item ${isActive('/admin/activity') ? 'active' : ''}`}>
+            <Activity size={19} /> Activity Monitor
+          </Link>
+          <Link to="/admin/vendors" className={`sidebar-item ${isActive('/admin/vendors') ? 'active' : ''}`}>
+            <Store size={19} /> Vendors
+          </Link>
+          <Link to="/admin/ai" className={`sidebar-item ${isActive('/admin/ai') ? 'active' : ''}`}>
+            <Brain size={19} /> AI Tavsiyalar
+          </Link>
+          <Link to="/admin/backups" className={`sidebar-item ${isActive('/admin/backups') ? 'active' : ''}`}>
+            <Database size={19} /> Backups
           </Link>
 
           {user?.role === 'superadmin' && (
@@ -435,6 +495,21 @@ const AdminDashboard = () => {
             <Route path="/promo" element={<AdminPromoCodes />} />
             <Route path="/ads" element={<AdminAds />} />
             <Route path="/payments" element={<Payments />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/delivery" element={<Delivery />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/carts" element={<AbandonedCarts />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/refunds" element={<Refunds />} />
+            <Route path="/coupons-analytics" element={<CouponsAnalytics />} />
+            <Route path="/wishlist-analytics" element={<WishlistAnalytics />} />
+            <Route path="/search-analytics" element={<SearchAnalytics />} />
+            <Route path="/activity" element={<ActivityMonitor />} />
+            <Route path="/vendors" element={<Vendors />} />
+            <Route path="/ai" element={<AI />} />
+            <Route path="/backups" element={<Backups />} />
           </Routes>
         </div>
       </main>
