@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Package, AlertTriangle, Search, Filter, ArrowDown, ArrowUp } from 'lucide-react';
+import { Package as PackageIcon, AlertTriangle, Search, Filter, ArrowDown, ArrowUp } from 'lucide-react';
 import { products } from '../../api';
 import { useApp } from '../../context/AppContext';
 
@@ -62,7 +62,7 @@ const Inventory = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '32px' }}>
           <div style={{ background: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #f1f1f1', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-              <Package size={24} color="#3B82F6" />
+              <PackageIcon size={24} color="#3B82F6" />
               <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Jami mahsulotlar</span>
             </div>
             <h3 style={{ fontSize: '28px', fontWeight: 800, margin: 0 }}>{inventory.length}</h3>

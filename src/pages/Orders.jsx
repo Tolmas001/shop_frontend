@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { orders } from '../api';
-import { CreditCard, Banknote, CheckCircle2, Package, Truck, Settings, Clock } from 'lucide-react';
+import { CreditCard, Banknote, CheckCircle2, Package as PackageIcon, Truck, Settings, Clock } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import OrderTimeline from '../components/OrderTimeline';
 

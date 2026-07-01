@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, TrendingUp, Users, Package, Search } from 'lucide-react';
+import { Heart, TrendingUp, Users, Package as PackageIcon, Search } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -74,7 +74,7 @@ const WishlistAnalytics = () => {
 
           <div style={{ background: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #f1f1f1', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-              <Package size={24} color="#3B82F6" />
+              <PackageIcon size={24} color="#3B82F6" />
               <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Jami mahsulotlar</span>
             </div>
             <h3 style={{ fontSize: '28px', fontWeight: 800, margin: 0 }}>{wishlistData?.totalItems || 0}</h3>

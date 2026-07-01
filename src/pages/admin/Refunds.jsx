@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { RotateCcw, CheckCircle, XCircle, Clock, DollarSign, Search, Filter, Package, AlertCircle } from 'lucide-react';
+import { RotateCcw, CheckCircle, XCircle, Clock, DollarSign, Search, Filter, Package as PackageIcon, AlertCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 const Refunds = () => {
@@ -178,7 +178,7 @@ const Refunds = () => {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                     <div style={{ width: '48px', height: '48px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Package size={24} color="#3B82F6" />
+                      <PackageIcon size={24} color="#3B82F6" />
                     </div>
                     <div>
                       <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '4px' }}>Order #{refund.order_id}</h3>

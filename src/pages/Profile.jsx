@@ -4,7 +4,7 @@ import { useApp } from '../context/AppContext';
 import { auth as authApi, orders as ordersApi } from '../api';
 import {
   User, Settings, Globe, ShieldCheck, CheckCircle, AlertCircle,
-  Package, CreditCard, Banknote, ChevronRight, Sun, Moon, Lock,
+  Package as PackageIcon, CreditCard, Banknote, ChevronRight, Sun, Moon, Lock,
   LogOut, Eye, EyeOff, MapPin, Star, Plus, Trash2, Bell,
   Fingerprint, Zap, Award, Smartphone, X
 } from 'lucide-react';
@@ -176,7 +176,7 @@ const Profile = () => {
 
   const tabs = [
     { id: 'account', label: t('profile_info'), icon: User },
-    { id: 'orders', label: t('my_orders'), icon: Package },
+    { id: 'orders', label: t('my_orders'), icon: PackageIcon },
     { id: 'addresses', label: t('saved_addresses'), icon: MapPin },
     { id: 'payments', label: t('payment_methods'), icon: CreditCard },
     { id: 'reviews', label: t('my_reviews'), icon: Star },
@@ -416,7 +416,7 @@ const Profile = () => {
                   <div style={{ background: 'var(--bg-card)', borderRadius: '28px', padding: '36px', border: '1px solid var(--border-color)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '32px' }}>
                       <div style={{ width: '52px', height: '52px', background: 'rgba(5,150,105,0.1)', color: '#059669', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Package size={26} />
+                        <PackageIcon size={26} />
                       </div>
                       <div>
                         <h3 style={{ fontSize: '22px', fontWeight: 800, margin: 0 }}>{t('my_orders')}</h3>
@@ -428,7 +428,7 @@ const Profile = () => {
                       <div style={{ textAlign: 'center', padding: '60px' }}><div className="loader" style={{ margin: '0 auto' }} /></div>
                     ) : orders.length === 0 ? (
                       <div style={{ textAlign: 'center', padding: '80px 20px', opacity: 0.4 }}>
-                        <Package size={48} style={{ marginBottom: '16px' }} />
+                        <PackageIcon size={48} style={{ marginBottom: '16px' }} />
                         <p style={{ fontSize: '18px' }}>{t('no_orders')}</p>
                       </div>
                     ) : (

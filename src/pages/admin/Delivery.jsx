@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Package, CheckCircle, XCircle, Clock, MapPin, Search, Filter } from 'lucide-react';
+import { Truck, Package as PackageIcon, CheckCircle, XCircle, Clock, MapPin, Search, Filter } from 'lucide-react';
 import { orders } from '../../api';
 import { useApp } from '../../context/AppContext';
 
@@ -61,12 +61,12 @@ const Delivery = () => {
   const getStatusIcon = (status) => {
     const icons = {
       processing: Clock,
-      packed: Package,
+      packed: PackageIcon,
       shipped: Truck,
       delivered: CheckCircle,
       cancelled: XCircle
     };
-    return icons[status] || Package;
+    return icons[status] || PackageIcon;
   };
 
   const getStatusSteps = (status) => {

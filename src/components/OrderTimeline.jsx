@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, Package, Truck, Home, Clock } from 'lucide-react';
+import { Check, Package as PackageIcon, Truck, Home, Clock } from 'lucide-react';
 
 const OrderTimeline = ({ status }) => {
   const statuses = [
     { id: 'pending', label: 'Buyurtma berildi', icon: <Clock size={20} /> },
-    { id: 'processing', label: 'Tayyorlanmoqda', icon: <Package size={20} /> },
+    { id: 'processing', label: 'Tayyorlanmoqda', icon: <PackageIcon size={20} /> },
     { id: 'shipped', label: 'Yo\'lda', icon: <Truck size={20} /> },
     { id: 'delivered', label: 'Yetkazildi', icon: <Home size={20} /> },
   ];
