@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell, Check, CheckCheck, Trash2, Filter, Package, CreditCard, Star, TrendingDown, User, Settings, AlertCircle, Clock, MoreVertical } from 'lucide-react';
+import { Bell, Check, CheckCheck, Trash2, Filter, Package as PackageIcon, CreditCard, Star, TrendingDown, User, Settings, AlertCircle, Clock, MoreVertical } from 'lucide-react';
 import { notifications as notifyApi } from '../../api';
 
 const Notifications = () => {
@@ -70,7 +70,7 @@ const Notifications = () => {
 
   const getNotificationIcon = (type) => {
     const icons = {
-      order: { icon: Package, color: '#3B82F6', bg: '#EFF6FF' },
+      order: { icon: PackageIcon, color: '#3B82F6', bg: '#EFF6FF' },
       payment: { icon: CreditCard, color: '#10B981', bg: '#ECFDF5' },
       review: { icon: Star, color: '#F59E0B', bg: '#FEF3C7' },
       stock: { icon: TrendingDown, color: '#EF4444', bg: '#FEF2F2' },
