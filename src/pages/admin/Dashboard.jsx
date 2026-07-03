@@ -49,7 +49,8 @@ import {
   ShieldCheck,
   History,
   Ticket,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Package as PackageIcon
 } from 'lucide-react';
 
 import {
@@ -152,7 +153,7 @@ const AdminDashboard = () => {
             <TrendingUp size={19} /> Analytics
           </Link>
           <Link to="/admin/inventory" className={`sidebar-item ${isActive('/admin/inventory') ? 'active' : ''}`}>
-            <Package size={19} /> Ombor
+            <PackageIcon size={19} /> Ombor
           </Link>
           <Link to="/admin/notifications" className={`sidebar-item ${isActive('/admin/notifications') ? 'active' : ''}`}>
             <Bell size={19} /> Bildirishnomalar
