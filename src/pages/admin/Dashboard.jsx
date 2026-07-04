@@ -60,7 +60,7 @@ import {
   Store,
   Search,
   RotateCcw,
-  BarChart
+  BarChart as BarChartIcon
 } from 'lucide-react';
 
 import {
@@ -184,7 +184,7 @@ const AdminDashboard = () => {
             <RotateCcw size={19} /> Qaytarishlar
           </Link>
           <Link to="/admin/coupons-analytics" className={`sidebar-item ${isActive('/admin/coupons-analytics') ? 'active' : ''}`}>
-            <BarChart size={19} /> Promo statistika
+            <BarChartIcon size={19} /> Promo statistika
           </Link>
           <Link to="/admin/wishlist-analytics" className={`sidebar-item ${isActive('/admin/wishlist-analytics') ? 'active' : ''}`}>
             <Heart size={19} /> Wishlist statistika
