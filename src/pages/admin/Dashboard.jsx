@@ -59,7 +59,8 @@ import {
   Database,
   Store,
   Search,
-  RotateCcw
+  RotateCcw,
+  BarChart3
 } from 'lucide-react';
 
 import {
