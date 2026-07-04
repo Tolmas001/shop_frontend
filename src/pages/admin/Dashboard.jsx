@@ -48,6 +48,7 @@ import {
   AlertCircle,
   Bell,
   ShieldCheck,
+  Shield,
   History,
   Ticket,
   Image as ImageIcon,
