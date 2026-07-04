@@ -44,13 +44,20 @@ import {
   TrendingUp,
   Heart,
   ShoppingBag,
+  ShoppingCart,
   AlertCircle,
   Bell,
   ShieldCheck,
   History,
   Ticket,
   Image as ImageIcon,
-  Package as PackageIcon
+  Package as PackageIcon,
+  Truck,
+  Activity,
+  Brain,
+  Database,
+  Store,
+  Search
 } from 'lucide-react';
 
 import {
