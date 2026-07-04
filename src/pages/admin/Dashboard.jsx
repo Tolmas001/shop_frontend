@@ -58,7 +58,8 @@ import {
   Brain,
   Database,
   Store,
-  Search
+  Search,
+  RotateCcw
 } from 'lucide-react';
 
 import {
