@@ -13,6 +13,13 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Clear inputs when moving to a new step
+  React.useEffect(() => {
+    if (step === 2) setEmail('');
+    if (step === 3) setCode('');
+    if (step === 4) setNewPassword('');
+  }, [step]);
+
   const handleSendCode = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -21,6 +28,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
       await forgotPassword(email);
       showNotification(t('success_forgot_password'));
       setStep(2);
+      setEmail(''); // clear email after sending code
     } catch (err) {
       setError(err.response?.data?.error || t('error_occurred'));
     } finally {
@@ -35,6 +43,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
     try {
       await verifyResetCode(email, code);
       setStep(3);
+      setCode(''); // clear OTP code after verification
     } catch (err) {
       setError(err.response?.data?.error || t('error_occurred'));
     } finally {
@@ -50,6 +59,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
       await resetPassword(email, code, newPassword);
       showNotification(t('success_reset_password'));
       setStep(4);
+      setNewPassword(''); // clear password after reset
     } catch (err) {
       setError(err.response?.data?.error || t('error_occurred'));
     } finally {
