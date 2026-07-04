@@ -412,7 +412,7 @@ const AdminDashboard = () => {
                         <Heart size={20} color="#EF4444" />
                       </div>
                       <div style={{ height: '300px', width: '100%' }}>
-                        <ResponsiveContainer width="100%" height="100%">
+                        <ResponsiveContainer width="100%" height={300}>
                           <BarChart data={statsData.popularWishlist}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#64748B' }} />
