@@ -4,6 +4,7 @@ import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { stats, notifications as notifyApi } from '../../api';
+import { admin } from '../../api';
 import AdminProducts from './Products';
 import AdminCategories from './Categories';
 import AdminOrders from './Orders';
