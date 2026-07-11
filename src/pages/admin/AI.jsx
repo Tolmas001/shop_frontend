@@ -115,7 +115,7 @@ const AI = () => {
             <h3 style={{ fontSize: '18px', fontWeight: 700, margin: 0 }}>Narx tavsiyalari</h3>
           </div>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table table-cards">
               <thead>
                 <tr>
                   <th>Mahsulot</th>
@@ -128,11 +128,11 @@ const AI = () => {
               <tbody>
                 {recommendations?.priceSuggestions?.map((item) => (
                   <tr key={item.id}>
-                    <td style={{ fontWeight: 700 }}>{item.name}</td>
-                    <td>{formatPrice(item.currentPrice)}</td>
-                    <td style={{ fontWeight: 700, color: item.action === 'increase' ? '#10B981' : '#EF4444' }}>{formatPrice(item.suggestedPrice)}</td>
-                    <td style={{ fontSize: '14px' }}>{item.reason}</td>
-                    <td>
+                    <td data-label="Mahsulot" style={{ fontWeight: 700 }}>{item.name}</td>
+                    <td data-label="Hozirgi narx">{formatPrice(item.currentPrice)}</td>
+                    <td data-label="Tavsiya etilgan" style={{ fontWeight: 700, color: item.action === 'increase' ? '#10B981' : '#EF4444' }}>{formatPrice(item.suggestedPrice)}</td>
+                    <td data-label="Sabab" style={{ fontSize: '14px' }}>{item.reason}</td>
+                    <td data-label="Amal">
                       <span style={{ padding: '6px 12px', borderRadius: '20px', background: item.action === 'increase' ? '#ECFDF5' : '#FEF2F2', color: item.action === 'increase' ? '#059669' : '#DC2626', fontSize: '12px', fontWeight: 700 }}>
                         {item.action === 'increase' ? 'Oshirish' : 'Tushirish'}
                       </span>

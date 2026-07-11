@@ -55,7 +55,7 @@ const AdminCategories = () => {
         </motion.button>
       </div>
 
-      <table className="table">
+      <table className="table table-cards">
         <thead>
           <tr>
             <th>ID</th>
@@ -67,10 +67,10 @@ const AdminCategories = () => {
         <tbody>
           {categoriesList.map(c => (
             <tr key={c.id}>
-              <td>{c.id}</td>
-              <td>{c.name}</td>
-              <td>{c.description || '-'}</td>
-              <td className="table-actions">
+              <td data-label="ID">{c.id}</td>
+              <td data-label="Nom">{c.name}</td>
+              <td data-label="Tavsif">{c.description || '-'}</td>
+              <td data-label="Amallar" className="table-actions">
                 <motion.button 
                   className="btn btn-secondary" 
                   onClick={() => handleEdit(c)}

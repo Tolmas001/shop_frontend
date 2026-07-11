@@ -440,7 +440,7 @@ const AdminDashboard = () => {
                           <Link to="/admin/orders" className="view-all">Barchasini ko'rish →</Link>
                         </div>
                         <div className="table-responsive">
-                          <table className="table">
+                          <table className="table table-cards">
                             <thead>
                               <tr>
                                 <th>ID</th>
@@ -453,11 +453,11 @@ const AdminDashboard = () => {
                             <tbody>
                               {statsData.recentOrders?.map(order => (
                                 <tr key={order.id}>
-                                  <td style={{ fontWeight: 600, color: 'var(--text-muted)' }}>#{order.id}</td>
-                                  <td style={{ fontWeight: 600 }}>{order.customer_name}</td>
-                                  <td style={{ color: '#64748B' }}>{new Date(order.created_at).toLocaleDateString()}</td>
-                                  <td style={{ fontWeight: 700 }}>{order.total_amount?.toLocaleString()} so'm</td>
-                                  <td>
+                                  <td data-label="ID" style={{ fontWeight: 600, color: 'var(--text-muted)' }}>#{order.id}</td>
+                                  <td data-label="Mijoz" style={{ fontWeight: 600 }}>{order.customer_name}</td>
+                                  <td data-label="Sana" style={{ color: '#64748B' }}>{new Date(order.created_at).toLocaleDateString()}</td>
+                                  <td data-label="Summa" style={{ fontWeight: 700 }}>{order.total_amount?.toLocaleString()} so'm</td>
+                                  <td data-label="Holat">
                                     <span className={`status-badge ${order.status}`}>
                                       {order.status}
                                     </span>

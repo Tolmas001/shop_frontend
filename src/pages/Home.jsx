@@ -134,17 +134,12 @@ const Home = () => {
     <div className="home-page">
       {/* Hero Ads Slider Section */}
       <section className="hero-slider-modern">
-        <AnimatePresence mode="wait">
-          <motion.div 
+          <div
             key={currentBanner}
-            className="banner-slide"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.6 }}
-            style={{ 
+            className="banner-slide banner-slide-enter"
+            style={{
               backgroundColor: activeBanners[currentBanner].color || '#111',
-              backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(${activeBanners[currentBanner].image?.startsWith('/') ? backendUrl + activeBanners[currentBanner].image : activeBanners[currentBanner].image})` 
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.32), rgba(0,0,0,0.52)), url(${activeBanners[currentBanner].image?.startsWith('/') ? backendUrl + activeBanners[currentBanner].image : activeBanners[currentBanner].image})`
             }}
           >
             <div className="container">
@@ -152,50 +147,34 @@ const Home = () => {
               <div className="liquid-bubble" style={{ width: '80px', height: '80px', bottom: '15%', right: '10%', animationDelay: '2s' }}></div>
               <div className="liquid-bubble" style={{ width: '60px', height: '60px', top: '40%', right: '20%', animationDelay: '4s' }}></div>
               
-              <div className="banner-content">
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="banner-subtitle"
-                  style={{ background: activeBanners[currentBanner].color || 'var(--primary)' }}
+              <div className="banner-content" key={currentBanner}>
+                <span
+                  className="banner-subtitle banner-reveal"
+                  style={{ background: activeBanners[currentBanner].color || 'var(--primary)', animationDelay: '0.15s' }}
                 >
                   {activeBanners[currentBanner].subtitle}
-                </motion.span>
-                <motion.h1 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
+                </span>
+                <h1 className="banner-reveal" style={{ animationDelay: '0.25s' }}>
                   {activeBanners[currentBanner].title}
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                >
+                </h1>
+                <p className="banner-reveal" style={{ animationDelay: '0.35s' }}>
                   {activeBanners[currentBanner].description}
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  <Link 
-                    to={activeBanners[currentBanner].link || "/products"} 
+                </p>
+                <div className="banner-reveal" style={{ animationDelay: '0.45s' }}>
+                  <Link
+                    to={activeBanners[currentBanner].link || "/products"}
                     className="btn btn-primary banner-btn"
-                    style={{ 
+                    style={{
                       background: `linear-gradient(135deg, ${activeBanners[currentBanner].color}DD, ${activeBanners[currentBanner].color}99)`,
                       boxShadow: `0 10px 25px -5px ${activeBanners[currentBanner].color}66`
                     }}
                   >
                     {activeBanners[currentBanner].button_text} <ArrowRight size={20} />
                   </Link>
-                </motion.div>
+                </div>
               </div>
             </div>
-          </motion.div>
-        </AnimatePresence>
+          </div>
 
         <div className="slider-controls">
           <button className="slider-arrow prev" onClick={() => setCurrentBanner(prev => (prev - 1 + activeBanners.length) % activeBanners.length)}>

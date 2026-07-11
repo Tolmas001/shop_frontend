@@ -67,7 +67,7 @@ const AdminOrders = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <table className="table">
+        <table className="table table-cards">
           <thead>
             <tr>
               <th>ID</th>
@@ -85,25 +85,25 @@ const AdminOrders = () => {
           <tbody>
             {ordersList.map(order => (
               <tr key={order.id}>
-                <td>#{order.id}</td>
-                <td>{order.customer_name}</td>
-                <td>{order.customer_phone}</td>
-                <td>{order.customer_address || '-'}</td>
-                <td>
+                <td data-label="ID">#{order.id}</td>
+                <td data-label="Mijoz">{order.customer_name}</td>
+                <td data-label="Telefon">{order.customer_phone}</td>
+                <td data-label="Manzil">{order.customer_address || '-'}</td>
+                <td data-label="Yetkazish">
                   <div style={{ fontSize: '12px', textTransform: 'capitalize' }}>{order.delivery_method || 'standart'}</div>
                   <div style={{ fontSize: '10px', color: '#888' }}>{order.delivery_cost > 0 ? `${order.delivery_cost.toLocaleString()} so'm` : 'Bepul'}</div>
                 </td>
-                <td style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <td data-label="Mahsulotlar" style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {order.items || '-'}
                 </td>
-                <td>{order.total_amount?.toLocaleString()} so'm</td>
-                <td>
+                <td data-label="Jami">{order.total_amount?.toLocaleString()} so'm</td>
+                <td data-label="Holat">
                   <span className={`order-status ${getStatusClass(order.status)}`}>
                     {getStatusLabel(order.status)}
                   </span>
                 </td>
-                <td>{new Date(order.created_at).toLocaleDateString('uz-UZ')}</td>
-                <td>
+                <td data-label="Sana">{new Date(order.created_at).toLocaleDateString('uz-UZ')}</td>
+                <td data-label="Amallar">
                   <select 
                     value={order.status} 
                     onChange={(e) => handleStatusChange(order.id, e.target.value)}

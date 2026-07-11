@@ -101,7 +101,7 @@ const AdminProducts = () => {
       </div>
 
       <div className="table-responsive">
-        <table className="table">
+        <table className="table table-cards">
           <thead>
             <tr>
               <th>ID</th>
@@ -117,21 +117,21 @@ const AdminProducts = () => {
           <tbody>
             {productsList.map(p => (
               <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>
-                  <img 
-                    src={p.image?.startsWith('/') ? `${backendUrl}${p.image}` : (p.image || 'https://via.placeholder.com/50')} 
-                    alt="" 
+                <td data-label="ID">{p.id}</td>
+                <td data-label="Rasm">
+                  <img
+                    src={p.image?.startsWith('/') ? `${backendUrl}${p.image}` : (p.image || 'https://via.placeholder.com/50')}
+                    alt=""
                     style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '8px' }}
                     onError={handleImageError}
                   />
                 </td>
-                <td>{p.name}</td>
-                <td>{p.brand}</td>
-                <td>{p.category}</td>
-                <td>{p.price?.toLocaleString()} so'm</td>
-                <td>{p.stock_count}</td>
-                <td className="table-actions">
+                <td data-label="Nom">{p.name}</td>
+                <td data-label="Brend">{p.brand}</td>
+                <td data-label="Kategoriya">{p.category}</td>
+                <td data-label="Narx">{p.price?.toLocaleString()} so'm</td>
+                <td data-label="Ombor">{p.stock_count}</td>
+                <td data-label="Amallar" className="table-actions">
                   <motion.button 
                     className="btn btn-secondary" 
                     onClick={() => handleEdit(p)}

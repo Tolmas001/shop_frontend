@@ -118,7 +118,7 @@ const Ads = () => {
           <div className="loading-spinner">Yuklanmoqda...</div>
         ) : (
           <div className="admin-table-container">
-            <table className="admin-table">
+            <table className="admin-table table-cards">
               <thead>
                 <tr>
                   <th>Rasm</th>
@@ -133,7 +133,7 @@ const Ads = () => {
               <tbody>
                 {adsList.map((ad) => (
                   <tr key={ad.id}>
-                    <td>
+                    <td data-label="Rasm">
                       <div className="admin-table-img">
                         <img 
                           src={ad.image.startsWith('/') ? `${backendUrl}${ad.image}` : ad.image} 
@@ -141,21 +141,21 @@ const Ads = () => {
                         />
                       </div>
                     </td>
-                    <td><div className="font-600">{ad.title}</div></td>
-                    <td><div className="text-muted">{ad.subtitle}</div></td>
-                    <td>{ad.button_text}</td>
-                    <td>
+                    <td data-label="Sarlavha"><div className="font-600">{ad.title}</div></td>
+                    <td data-label="Sub-sarlavha"><div className="text-muted">{ad.subtitle}</div></td>
+                    <td data-label="Tugma matni">{ad.button_text}</td>
+                    <td data-label="Rang">
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <div style={{ width: '20px', height: '20px', borderRadius: '4px', background: ad.color, border: '1px solid #ddd' }}></div>
                         <span style={{ fontSize: '12px', color: '#666' }}>{ad.color}</span>
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Holati">
                       <span className={`status-badge ${ad.is_active ? 'paid' : 'cancelled'}`}>
                         {ad.is_active ? 'Faol' : 'Nofaol'}
                       </span>
                     </td>
-                    <td>
+                    <td data-label="Amallar">
                       <div className="admin-actions">
                         <button className="action-btn edit" title="Tahrirlash" onClick={() => handleEdit(ad)}>
                           <Edit size={18} />

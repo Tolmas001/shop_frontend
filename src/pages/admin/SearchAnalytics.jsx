@@ -162,7 +162,7 @@ const SearchAnalytics = () => {
           >
             <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Eng ko'p qidirilgan so'zlar</h3>
             <div className="table-responsive">
-              <table className="table">
+              <table className="table table-cards">
                 <thead>
                   <tr>
                     <th>So'z</th>
@@ -175,16 +175,16 @@ const SearchAnalytics = () => {
                 <tbody>
                   {searchData?.topKeywords?.map((item, index) => (
                     <tr key={index}>
-                      <td style={{ fontWeight: 700 }}>{item.keyword}</td>
-                      <td>{item.searches}</td>
-                      <td>
+                      <td data-label="So'z" style={{ fontWeight: 700 }}>{item.keyword}</td>
+                      <td data-label="Qidirishlar">{item.searches}</td>
+                      <td data-label="Trend">
                         <span style={{ color: item.trend.startsWith('+') ? '#10B981' : '#EF4444', fontWeight: 600, fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                           {item.trend.startsWith('+') ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                           {item.trend}
                         </span>
                       </td>
-                      <td>{item.results}</td>
-                      <td>{item.conversions}</td>
+                      <td data-label="Natijalar">{item.results}</td>
+                      <td data-label="Konversiya">{item.conversions}</td>
                     </tr>
                   ))}
                 </tbody>

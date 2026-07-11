@@ -122,7 +122,7 @@ const Inventory = () => {
         {/* Inventory Table */}
         <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #f1f1f1', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table table-cards">
               <thead>
                 <tr>
                   <th>Mahsulot</th>
@@ -139,7 +139,7 @@ const Inventory = () => {
                   
                   return (
                     <tr key={item.id}>
-                      <td>
+                      <td data-label="Mahsulot">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           <img
                             src={item.image?.startsWith('http') ? item.image : `${backendUrl}${item.image}`}
@@ -152,15 +152,15 @@ const Inventory = () => {
                           </div>
                         </div>
                       </td>
-                      <td>{item.category_name || '-'}</td>
-                      <td style={{ fontWeight: 700 }}>{formatPrice(item.price)}</td>
-                      <td>
+                      <td data-label="Kategoriya">{item.category_name || '-'}</td>
+                      <td data-label="Narx" style={{ fontWeight: 700 }}>{formatPrice(item.price)}</td>
+                      <td data-label="Qoldiq">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ fontWeight: 700, fontSize: '18px' }}>{item.stock}</span>
                           <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>dona</span>
                         </div>
                       </td>
-                      <td>
+                      <td data-label="Holat">
                         {isOut ? (
                           <span style={{ padding: '6px 12px', borderRadius: '20px', background: '#FEF2F2', color: '#DC2626', fontSize: '12px', fontWeight: 600 }}>
                             Tugab qolgan

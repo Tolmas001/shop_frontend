@@ -2119,13 +2119,25 @@ input:focus, textarea:focus, select:focus {
   .sidebar-nav {
     flex-direction: row;
     overflow-x: auto;
-    padding: 8px 16px;
-    gap: 4px;
+    padding: 8px 16px 10px;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+  }
+  .sidebar-nav::-webkit-scrollbar {
+    height: 3px;
+  }
+  .sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
   }
   .sidebar-item {
     white-space: nowrap;
-    padding: 10px 14px;
+    padding: 10px 16px;
     font-size: 14px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
   }
   .sidebar-header {
     padding: 0 20px 16px;
@@ -2148,8 +2160,25 @@ input:focus, textarea:focus, select:focus {
   .admin-content {
     padding: 24px 16px;
   }
+  /* 2×2 stat cards on mobile (inline style needs !important override) */
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .stat-card-premium {
+    padding: 16px !important;
+  }
+  .stat-card-premium h3 {
+    font-size: 17px !important;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    word-break: break-word;
+  }
+  .stat-card-premium h3 span {
+    font-size: 11px !important;
+  }
+  .stat-card-premium p {
+    font-size: 11px !important;
   }
   .dashboard-grid-2 {
     grid-template-columns: 1fr !important;
@@ -4590,9 +4619,22 @@ input:focus, textarea:focus, select:focus {
 
 @media (max-width: 480px) {
   .products-grid, .products-grid-modern {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
   }
+
+  /* Compact product cards for the 2-column mobile grid */
+  .product-info { padding: 12px !important; }
+  .product-image-wrap { aspect-ratio: 1 / 1 !important; }
+  .product-title-text { font-size: 13px !important; height: 36px !important; line-height: 1.35 !important; }
+  .product-cat { font-size: 9px !important; margin-bottom: 6px !important; }
+  .product-price { font-size: 15px !important; }
+  .product-rating { margin-bottom: 10px !important; }
+  .product-badge { top: 10px !important; left: 10px !important; padding: 3px 9px !important; font-size: 9px !important; }
+  .add-cart-mini { width: 34px !important; height: 34px !important; }
+  /* Action buttons always visible on touch (no hover) */
+  .product-action-btns { transform: translateX(0) !important; }
+  .product-card-btn { width: 32px !important; height: 32px !important; }
 
   .review-card-modern {
     min-width: 280px !important;
@@ -4601,6 +4643,30 @@ input:focus, textarea:focus, select:focus {
 
   .hero-content h1 {
     font-size: 32px !important;
+  }
+
+  /* Compact cart items on mobile: image + info on one row, controls below */
+  .cart-item-enhanced {
+    gap: 14px !important;
+    padding: 14px !important;
+  }
+  .cart-item-enhanced > img {
+    width: 76px !important;
+    height: 76px !important;
+    border-radius: 14px !important;
+  }
+  .cart-item-enhanced > div:first-of-type h3 {
+    font-size: 15px !important;
+  }
+  .cart-item-controls {
+    min-width: 100% !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    flex: 1 1 100% !important;
+  }
+  .cart-item-controls > div:nth-of-type(2) {
+    min-width: auto !important;
+    font-size: 15px !important;
   }
   
   .product-card-title {
@@ -5122,4 +5188,244 @@ input:focus, textarea:focus, select:focus {
 
 [data-theme='dark'] .glass-3 {
   background: rgba(15, 23, 42, 0.8);
+}
+
+/* ============================================================
+   UI/UX ENHANCEMENTS
+   Rang va shrift o'zgarmaydi — faqat interaction sifati,
+   accessibility, holatlar va vizual ritm yaxshilangan.
+   ============================================================ */
+
+/* 1 — Smooth in-page scrolling (anchor links, "tepaga qaytish") */
+html { scroll-behavior: smooth; }
+
+/* 2 — Keyboard accessibility: only show a focus ring for keyboard users,
+   never for mouse clicks. Fixes the global `button { outline: none }`. */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible,
+.nav-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible) { outline: none; }
+
+/* 3 — Tactile press feedback so every control feels physical */
+.btn:active,
+.nav-btn:active,
+.category-card:active,
+.add-cart-mini:active,
+.product-card-btn:active,
+.banner-btn:active { transform: scale(0.97); }
+
+/* 4 — Unify motion on interactive surfaces with a natural spring curve */
+.btn, .nav-btn, .category-card, .product-card,
+.product-card-btn, .add-cart-mini, .chip, .sidebar-item {
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: auto;
+}
+
+/* 5 — Refined card depth on hover (softer, layered — colour unchanged) */
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05),
+              0 24px 48px -12px rgba(15, 23, 42, 0.16);
+}
+
+/* 6 — Image reveal is smoother and never overflows its frame */
+.product-img { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* 7 — Text selection uses the brand tint instead of default blue */
+::selection { background: var(--primary-glow); color: var(--primary-hover); }
+
+/* 8 — Quieter, brand-tinted scrollbar (WebKit) */
+* { scrollbar-width: thin; scrollbar-color: rgba(37, 99, 235, 0.35) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(37, 99, 235, 0.28);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(37, 99, 235, 0.5); background-clip: content-box; }
+
+/* 9 — Disabled controls read as disabled */
+button:disabled,
+.btn:disabled,
+.add-cart-mini:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* 10 — Skeleton shimmer for loading states */
+@keyframes ux-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* 10b — Reliable staggered reveal for hero banner text (replaces the
+   framer-motion sequence that could stick at opacity:0) */
+@keyframes banner-reveal-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.banner-reveal {
+  opacity: 1;
+}
+@keyframes banner-slide-fade {
+  from { opacity: 0; transform: scale(1.02); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.banner-slide-enter {
+  animation: banner-slide-fade 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 10c — Product cards are always fully visible (replaces framer
+   whileInView that could stick at partial opacity on re-render). */
+.product-card-reveal {
+  opacity: 1 !important;
+}
+
+/* 11 — Respect users who prefer reduced motion (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.08ms !important;
+  }
+}
+
+/* 12 — Admin tables on mobile: compact cells + smooth, visible horizontal
+   scroll so every admin page (orders, products, users, …) stays usable. */
+@media (max-width: 768px) {
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(37, 99, 235, 0.4) transparent;
+  }
+  .table-responsive::-webkit-scrollbar {
+    height: 6px;
+  }
+  .table-responsive::-webkit-scrollbar-thumb {
+    background: rgba(37, 99, 235, 0.4);
+    border-radius: 999px;
+  }
+  .table { min-width: 560px; }
+  .table th {
+    padding: 12px 14px !important;
+    font-size: 11px !important;
+  }
+  .table td {
+    padding: 12px 14px !important;
+    font-size: 13px !important;
+  }
+  /* Admin content padding + headings scale down */
+  .admin-content { padding: 20px 14px !important; }
+  .admin-header h1 { font-size: 26px !important; }
+  /* Charts, tables, widgets: full width, single column */
+  .charts-area,
+  .dashboard-grid-2,
+  .admin-grid,
+  .admin-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* Action buttons in table rows wrap instead of overflowing */
+  .table-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+/* 13 — Opt-in: turn a wide admin table into stacked cards on phones.
+   Add class "table-cards" to the <table> and data-label to each <td>. */
+@media (max-width: 640px) {
+  .table-cards {
+    min-width: 0 !important;
+    border-collapse: collapse;
+  }
+  .table-cards thead {
+    display: none;
+  }
+  .table-cards tbody,
+  .table-cards tr,
+  .table-cards td {
+    display: block;
+    width: 100%;
+  }
+  .table-cards tr {
+    margin-bottom: 14px;
+    border: 1px solid var(--border) !important;
+    border-radius: 16px;
+    background: var(--bg-card);
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  }
+  .table-cards td {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 16px !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    text-align: right;
+    font-size: 13px !important;
+    max-width: none !important;
+    white-space: normal !important;
+    overflow: visible !important;
+  }
+  .table-cards tr td:last-child {
+    border-bottom: none !important;
+  }
+  .table-cards td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    text-align: left;
+    flex-shrink: 0;
+  }
+  /* Full-width interactive controls inside a card cell */
+  .table-cards td select,
+  .table-cards td .table-actions {
+    margin-left: auto;
+  }
+  /* Action cells: stack the label above full-width buttons */
+  .table-cards td.table-actions,
+  .table-cards td[data-label="Amallar"],
+  .table-cards td[data-label="Amal"] {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .table-cards td.table-actions::before,
+  .table-cards td[data-label="Amallar"]::before,
+  .table-cards td[data-label="Amal"]::before {
+    text-align: left;
+    margin-bottom: 2px;
+  }
+  .table-cards td.table-actions .btn,
+  .table-cards td[data-label="Amallar"] .btn {
+    flex: 1;
+    min-width: 0;
+  }
+  /* Admin page headers: let the title + "add" button wrap instead of
+     overlapping. Targets the common inline "space-between" flex row. */
+  .admin-content [style*="space-between"] {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 }

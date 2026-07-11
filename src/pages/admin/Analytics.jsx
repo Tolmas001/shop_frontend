@@ -256,7 +256,7 @@ const Analytics = () => {
         >
           <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Eng ko'p sotilgan mahsulotlar</h3>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table table-cards">
               <thead>
                 <tr>
                   <th>Mahsulot</th>
@@ -268,10 +268,10 @@ const Analytics = () => {
               <tbody>
                 {analyticsData?.topProducts?.map((product, index) => (
                   <tr key={index}>
-                    <td style={{ fontWeight: 600 }}>{product.name}</td>
-                    <td>{product.sales} dona</td>
-                    <td style={{ fontWeight: 700 }}>{formatPrice(product.revenue)}</td>
-                    <td>
+                    <td data-label="Mahsulot" style={{ fontWeight: 600 }}>{product.name}</td>
+                    <td data-label="Sotilgan">{product.sales} dona</td>
+                    <td data-label="Daromad" style={{ fontWeight: 700 }}>{formatPrice(product.revenue)}</td>
+                    <td data-label="O'sish">
                       <span style={{ color: '#10B981', fontWeight: 600, fontSize: '14px' }}>
                         +{Math.floor(Math.random() * 20 + 5)}%
                       </span>

@@ -184,7 +184,7 @@ const Backups = () => {
         >
           <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Backup tarixi</h3>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table table-cards">
               <thead>
                 <tr>
                   <th>Nomi</th>
@@ -197,9 +197,9 @@ const Backups = () => {
               <tbody>
                 {backups.map((backup) => (
                   <tr key={backup.id}>
-                    <td style={{ fontWeight: 700 }}>{backup.name}</td>
-                    <td>
-                      <span style={{ 
+                    <td data-label="Nomi" style={{ fontWeight: 700 }}>{backup.name}</td>
+                    <td data-label="Turi">
+                      <span style={{
                         padding: '4px 12px', 
                         borderRadius: '20px', 
                         background: `${getTypeColor(backup.type)}20`, 
@@ -210,9 +210,9 @@ const Backups = () => {
                         {backup.type === 'daily' ? 'Kunlik' : backup.type === 'weekly' ? 'Haftalik' : backup.type === 'monthly' ? 'Oylik' : 'Qo\'lda'}
                       </span>
                     </td>
-                    <td>{backup.size}</td>
-                    <td style={{ fontSize: '14px' }}>{formatDate(backup.date)}</td>
-                    <td>
+                    <td data-label="Hajm">{backup.size}</td>
+                    <td data-label="Sana" style={{ fontSize: '14px' }}>{formatDate(backup.date)}</td>
+                    <td data-label="Amallar">
                       <div style={{ display: 'flex', gap: '8px' }}>
                         <button
                           onClick={() => downloadBackup(backup.name)}

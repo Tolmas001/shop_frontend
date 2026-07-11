@@ -98,7 +98,7 @@ const AdminPromoCodes = () => {
       </div>
 
       <div className="table-responsive" style={{ background: 'white', borderRadius: '24px', padding: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', border: '1px solid #f1f1f1' }}>
-        <table className="table">
+        <table className="table table-cards">
           <thead>
             <tr>
               <th>Kod</th>
@@ -118,7 +118,7 @@ const AdminPromoCodes = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <td>
+                <td data-label="Kod">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ padding: '8px', background: '#EEF2FF', borderRadius: '8px', color: '#4F46E5' }}>
                       <Ticket size={16} />
@@ -126,27 +126,27 @@ const AdminPromoCodes = () => {
                     <span style={{ fontWeight: 700, letterSpacing: '0.5px' }}>{p.code}</span>
                   </div>
                 </td>
-                <td>
+                <td data-label="Chegirma">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#10B981', fontWeight: 600 }}>
                     <Percent size={14} />
                     {p.discount_percent}%
                   </div>
                 </td>
-                <td>
+                <td data-label="Foydalanildi">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#4B5563' }}>
                     <Users size={14} />
                     {p.used_count}
                   </div>
                 </td>
-                <td>{p.usage_limit}</td>
-                <td>
+                <td data-label="Limit">{p.usage_limit}</td>
+                <td data-label="Muddati">
                   <div style={{ fontSize: '13px', color: '#6B7280', display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <Calendar size={14} />
                     {p.expiry_date ? new Date(p.expiry_date).toLocaleDateString() : 'Cheksiz'}
                   </div>
                 </td>
-                <td>
-                  <span style={{ 
+                <td data-label="Holat">
+                  <span style={{
                     padding: '4px 10px', borderRadius: '20px', fontSize: '11px', fontWeight: 700,
                     background: p.is_active ? '#D1FAE5' : '#F3F4F6',
                     color: p.is_active ? '#059669' : '#6B7280'
@@ -154,7 +154,7 @@ const AdminPromoCodes = () => {
                     {p.is_active ? 'AKTIV' : 'YOPILGAN'}
                   </span>
                 </td>
-                <td style={{ textAlign: 'right' }}>
+                <td data-label="Amallar" style={{ textAlign: 'right' }}>
                   <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
                     <button className="btn-icon" onClick={() => openEditModal(p)} style={{ color: '#4F46E5' }}><Edit2 size={18} /></button>
                     <button className="btn-icon" onClick={() => handleDelete(p.id)} style={{ color: '#EF4444' }}><Trash2 size={18} /></button>

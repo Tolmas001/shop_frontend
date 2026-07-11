@@ -82,13 +82,7 @@ const ProductCard = ({ product, onLike, onComment }) => {
 
   return (
     <>
-      <motion.div
-        className="product-card"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
+      <div className="product-card product-card-reveal">
         <div className="product-image-wrap">
           <Link to={`/product/${product.id}`}>
             <img 
@@ -189,7 +183,7 @@ const ProductCard = ({ product, onLike, onComment }) => {
              )}
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Modal is kept similar but updated with modern styles if needed */}
       <AnimatePresence>

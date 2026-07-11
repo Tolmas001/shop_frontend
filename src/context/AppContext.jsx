@@ -377,14 +377,16 @@ export const AppProvider = ({ children }) => {
 
   const login = async (username, password) => {
     const res = await auth.login(username, password);
-    localStorage.setItem('token', res.data.token);
+    localStorage.setItem('token', res.data.accessToken || res.data.token);
+    if (res.data.refreshToken) localStorage.setItem('refreshToken', res.data.refreshToken);
     setUser(res.data.user);
     fetchNotifications();
   };
 
   const googleLogin = async (credential) => {
     const res = await auth.googleLogin(credential);
-    localStorage.setItem('token', res.data.token);
+    localStorage.setItem('token', res.data.accessToken || res.data.token);
+    if (res.data.refreshToken) localStorage.setItem('refreshToken', res.data.refreshToken);
     setUser(res.data.user);
   };
 
@@ -417,7 +419,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const showNotification = (message, type = 'success') => {
-    const id = Date.now();
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     setToasts(prev => [...prev, { id, message, type }]);
     setTimeout(() => {
       setToasts(prev => prev.filter(n => n.id !== id));

@@ -163,7 +163,7 @@ const CouponsAnalytics = () => {
         >
           <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '20px' }}>Eng ko'p ishlatilgan promo kodlar</h3>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table table-cards">
               <thead>
                 <tr>
                   <th>Promo kod</th>
@@ -176,11 +176,11 @@ const CouponsAnalytics = () => {
               <tbody>
                 {couponData?.topCoupons?.map((coupon, index) => (
                   <tr key={index}>
-                    <td style={{ fontWeight: 700, color: 'var(--primary)' }}>{coupon.code}</td>
-                    <td>{coupon.usage} marta</td>
-                    <td>{coupon.orders} buyurtma</td>
-                    <td style={{ fontWeight: 700 }}>{formatPrice(coupon.savings)}</td>
-                    <td>
+                    <td data-label="Promo kod" style={{ fontWeight: 700, color: 'var(--primary)' }}>{coupon.code}</td>
+                    <td data-label="Foydalanish">{coupon.usage} marta</td>
+                    <td data-label="Buyurtmalar">{coupon.orders} buyurtma</td>
+                    <td data-label="Tejam" style={{ fontWeight: 700 }}>{formatPrice(coupon.savings)}</td>
+                    <td data-label="Trend">
                       <span style={{ color: '#10B981', fontWeight: 600, fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <TrendingUp size={14} />
                         +{Math.floor(Math.random() * 30 + 10)}%

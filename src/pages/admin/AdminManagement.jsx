@@ -58,7 +58,7 @@ const AdminManagement = () => {
       </div>
 
       <div className="table-responsive" style={{ background: 'white', borderRadius: '24px', padding: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', border: '1px solid #f1f1f1' }}>
-        <table className="table">
+        <table className="table table-cards">
           <thead>
             <tr>
               <th>Foydalanuvchi</th>
@@ -78,10 +78,10 @@ const AdminManagement = () => {
                   transition={{ delay: i * 0.05 }}
                   style={{ opacity: u.role === 'superadmin' ? 0.6 : 1 }}
                 >
-                  <td>
+                  <td data-label="Foydalanuvchi">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ 
-                        width: '40px', height: '40px', borderRadius: '50px', background: '#F3F4F6', 
+                      <div style={{
+                        width: '40px', height: '40px', borderRadius: '50px', background: '#F3F4F6',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'
                       }}>
                         {u.image ? (
@@ -93,14 +93,14 @@ const AdminManagement = () => {
                       <span style={{ fontWeight: 600 }}>{u.username}</span>
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Email">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6B7280' }}>
                       <Mail size={14} />
                       {u.email}
                     </div>
                   </td>
-                  <td>
-                    <span style={{ 
+                  <td data-label="Hozirgi Rol">
+                    <span style={{
                       padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600,
                       background: u.role === 'superadmin' ? '#FEF3C7' : (u.role === 'admin' ? '#EEF2FF' : '#F3F4F6'),
                       color: u.role === 'superadmin' ? '#D97706' : (u.role === 'admin' ? '#4F46E5' : '#4B5563'),
@@ -110,13 +110,13 @@ const AdminManagement = () => {
                       {u.role}
                     </span>
                   </td>
-                  <td>
+                  <td data-label="Sana">
                     <div style={{ fontSize: '13px', color: '#9CA3AF', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <Calendar size={14} />
                       {new Date(u.created_at).toLocaleDateString()}
                     </div>
                   </td>
-                  <td style={{ textAlign: 'right' }}>
+                  <td data-label="Admin Tayinlash" style={{ textAlign: 'right' }}>
                     {u.role !== 'superadmin' ? (
                       <button 
                         className={`btn ${u.role === 'admin' ? 'btn-danger-lite' : 'btn-primary'}`}
