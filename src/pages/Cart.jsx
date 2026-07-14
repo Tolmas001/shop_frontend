@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal, clearCart, t, backendUrl, appliedPromo, applyPromoCode, formatPrice, handleImageError } = useApp();

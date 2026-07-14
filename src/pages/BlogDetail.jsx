@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { blogs } from '../api';
+import { blogs } from '../services/api';
 import { motion } from 'framer-motion';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 import { Calendar, Eye, ChevronLeft, Share2 } from 'lucide-react';
 import Skeleton from '../components/Skeleton';
 

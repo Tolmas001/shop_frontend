@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, DollarSign, ShoppingCart, Users, Calendar, ArrowUp, ArrowDown } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import { stats } from '../../api';
-import { useApp } from '../../context/AppContext';
+import { stats } from '../../services/api';
+import { useApp } from '../../hooks/useApp';
 
 const Analytics = () => {
   const { formatPrice } = useApp();

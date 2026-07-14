@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { products, admin } from '../../api';
+import { products, admin } from '../../services/api';
 import { MessageSquare, Trash2, Box, User, Calendar, Star } from 'lucide-react';
 
 const AdminReviews = () => {

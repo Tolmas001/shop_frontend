@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { config } from '../../config';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../hooks/useApp';
 import { ShieldAlert, Lock, User } from 'lucide-react';
 
 const AdminLogin = () => {

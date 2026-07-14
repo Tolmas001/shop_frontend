@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { promo } from '../../api';
+import { promo } from '../../services/api';
 import { Ticket, Plus, Trash2, Edit2, X, Check, Calendar, Users, Percent } from 'lucide-react';
 
 const AdminPromoCodes = () => {

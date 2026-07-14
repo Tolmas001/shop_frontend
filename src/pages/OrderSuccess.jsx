@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { orders } from '../api';
+import { orders } from '../services/api';
 import { CheckCircle, Printer, ShoppingBag, ArrowLeft, Phone, MapPin, User, Calendar, CreditCard, Banknote } from 'lucide-react';
 
 const OrderSuccess = () => {

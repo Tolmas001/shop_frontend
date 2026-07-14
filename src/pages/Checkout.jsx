@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { orders } from '../api';
-import { useApp } from '../context/AppContext';
+import { orders } from '../services/api';
+import { useApp } from '../hooks/useApp';
 
 import { Banknote, CreditCard, Lock, MapPin } from 'lucide-react';
 

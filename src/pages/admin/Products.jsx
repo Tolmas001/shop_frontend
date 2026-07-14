@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { products, categories } from '../../api';
-import { useApp } from '../../context/AppContext';
+import { products, categories } from '../../services/api';
+import { useApp } from '../../hooks/useApp';
 
 const AdminProducts = () => {
   const { backendUrl, handleImageError } = useApp();

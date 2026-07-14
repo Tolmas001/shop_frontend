@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Send, Clock, CheckCircle, AlertCircle, Search, Filter, User, Calendar } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../hooks/useApp';
 
 const Support = () => {
   const { backendUrl } = useApp();

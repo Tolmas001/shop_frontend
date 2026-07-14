@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { admin, superAdmin } from '../../api';
+import { admin, superAdmin } from '../../services/api';
 import { Users as UsersIcon, User, Mail, Calendar, Shield, ShieldAlert, CheckCircle } from 'lucide-react';
 
 const AdminManagement = () => {

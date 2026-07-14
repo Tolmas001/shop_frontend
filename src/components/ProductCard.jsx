@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useApp } from '../context/AppContext';
-import { products } from '../api';
+import { useApp } from '../hooks/useApp';
+import { products } from '../services/api';
 import { Link } from 'react-router-dom';
 import { 
   Heart, 

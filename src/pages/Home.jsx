@@ -3,8 +3,8 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
 import InfoSection from '../components/InfoSection';
-import { products, categories as apiCategories, ads } from '../api';
-import { useApp } from '../context/AppContext';
+import { products, categories as apiCategories, ads } from '../services/api';
+import { useApp } from '../hooks/useApp';
 import Skeleton from '../components/Skeleton';
 import { 
   ArrowRight, 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Upload, X, Check, AlertCircle } from 'lucide-react';
-import { orders } from '../api';
+import { orders } from '../services/api';
 
 const PaymentUpload = () => {
   const { orderId } = useParams();

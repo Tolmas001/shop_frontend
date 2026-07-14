@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, Check, CheckCheck, Trash2, Filter, Package as PackageIcon, CreditCard, Star, TrendingDown, User, Settings, AlertCircle, Clock, MoreVertical } from 'lucide-react';
-import { notifications as notifyApi } from '../../api';
+import { notifications as notifyApi } from '../../services/api';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);

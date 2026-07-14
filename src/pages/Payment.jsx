@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CreditCard, User, Copy, Check, ArrowRight } from 'lucide-react';
-import { orders } from '../api';
-import { useApp } from '../context/AppContext';
+import { orders } from '../services/api';
+import { useApp } from '../hooks/useApp';
 
 const Payment = () => {
   const { orderId } = useParams();

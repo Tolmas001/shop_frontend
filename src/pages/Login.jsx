@@ -2,7 +2,7 @@ import { config } from '../config';
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 import ForgotPasswordModal from '../components/ForgotPasswordModal';
 import { Eye, EyeOff } from 'lucide-react';
 

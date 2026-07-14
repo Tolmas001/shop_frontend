@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useApp } from '../context/AppContext';
-import { auth } from '../api';
+import { useApp } from '../hooks/useApp';
+import { auth } from '../services/api';
 
 const LoginSuccess = () => {
   const [searchParams] = useSearchParams();
@@ -16,7 +16,7 @@ const LoginSuccess = () => {
       // Fetch user data to update state immediately
       auth.me()
         .then(res => {
-          setUser(res.data);
+          setUser(res.data.user);
           showNotification(t('login_success') || 'Muvaffaqiyatli kirdingiz!');
           navigate('/');
         })

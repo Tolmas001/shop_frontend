@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { orders } from '../api';
+import { orders } from '../services/api';
 import { CreditCard, Banknote, CheckCircle2, Package as PackageIcon, Truck, Settings, Clock } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 import OrderTimeline from '../components/OrderTimeline';
 
 const Orders = () => {

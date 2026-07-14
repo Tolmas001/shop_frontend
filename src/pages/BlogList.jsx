@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { blogs } from '../api';
+import { blogs } from '../services/api';
 import { Link } from 'react-router-dom';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 import { Calendar, User, Eye, ArrowRight } from 'lucide-react';
 import Skeleton from '../components/Skeleton';
 

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useApp } from '../../context/AppContext';
-import { stats, notifications as notifyApi } from '../../api';
-import { admin } from '../../api';
+import { useApp } from '../../hooks/useApp';
+import { stats, notifications as notifyApi } from '../../services/api';
+import { admin } from '../../services/api';
 import AdminProducts from './Products';
 import AdminCategories from './Categories';
 import AdminOrders from './Orders';
@@ -238,7 +238,7 @@ const AdminDashboard = () => {
               style={{ borderRadius: '14px', fontSize: '14px', padding: '12px 24px' }}
               onClick={async () => {
                 try {
-                  const { demo } = await import('../../api');
+                  const { demo } = await import('../../services/api');
                   await demo.seed();
                   alert('Demo ma`lumotlar muvaffaqiyatli yaratildi!');
                   window.location.reload();

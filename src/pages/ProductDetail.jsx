@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { products as api, orders as ordersApi } from '../api';
-import { useApp } from '../context/AppContext';
+import { products as api, orders as ordersApi } from '../services/api';
+import { useApp } from '../hooks/useApp';
 import Skeleton from '../components/Skeleton';
 import ProductCard from '../components/ProductCard';
 import { 

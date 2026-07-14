@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, X, Eye, Loader2, AlertCircle } from 'lucide-react';
-import { admin } from '../../api';
-import { useApp } from '../../context/AppContext';
+import { admin } from '../../services/api';
+import { useApp } from '../../hooks/useApp';
 import ReceiptModal from '../../components/ReceiptModal';
 
 const Payments = () => {

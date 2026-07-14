@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Store, DollarSign, Package as PackageIcon, CheckCircle, XCircle, Search, Filter, TrendingUp } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../hooks/useApp';
 
 const Vendors = () => {
   const { formatPrice, backendUrl } = useApp();

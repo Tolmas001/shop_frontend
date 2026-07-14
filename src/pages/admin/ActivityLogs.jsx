@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { superAdmin } from '../../api';
+import { superAdmin } from '../../services/api';
 import { Activity, User, Clock, Terminal, Search } from 'lucide-react';
 
 const ActivityLogs = () => {

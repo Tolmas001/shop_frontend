@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Database, Download, Trash2, Calendar, HardDrive, Clock, AlertCircle } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../hooks/useApp';
 
 const Backups = () => {
   const { backendUrl } = useApp();

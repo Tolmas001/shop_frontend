@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AppProvider } from './context/AppContext';
+import { AppProviders } from './context';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
@@ -27,18 +27,18 @@ import PaymentRejected from './pages/PaymentRejected';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
-import { useApp } from './context/AppContext';
+import { useApp } from './hooks/useApp';
 
 function App() {
   return (
-    <AppProvider>
+    <AppProviders>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route path="/admin/*" element={<AdminLayout />} />
           <Route path="/*" element={<MainLayout />} />
         </Routes>
       </BrowserRouter>
-    </AppProvider>
+    </AppProviders>
   );
 }
 

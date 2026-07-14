@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Package as PackageIcon, AlertTriangle, Search, Filter, ArrowDown, ArrowUp } from 'lucide-react';
-import { products } from '../../api';
-import { useApp } from '../../context/AppContext';
+import { products } from '../../services/api';
+import { useApp } from '../../hooks/useApp';
 
 const Inventory = () => {
   const { formatPrice, backendUrl } = useApp();

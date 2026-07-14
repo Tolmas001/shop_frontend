@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, KeyRound, Lock, ArrowRight, CheckCircle2, Eye, EyeOff } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 
 const ForgotPasswordModal = ({ isOpen, onClose }) => {
   const { t, forgotPassword, verifyResetCode, resetPassword, showNotification } = useApp();

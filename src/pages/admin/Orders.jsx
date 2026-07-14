@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { orders } from '../../api';
+import { orders } from '../../services/api';
 
 const AdminOrders = () => {
   const [ordersList, setOrdersList] = useState([]);

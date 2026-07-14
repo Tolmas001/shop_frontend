@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useApp } from '../context/AppContext';
-import { auth as authApi, orders as ordersApi } from '../api';
+import { useApp } from '../hooks/useApp';
+import { auth as authApi, orders as ordersApi } from '../services/api';
 import {
   User, Settings, Globe, ShieldCheck, CheckCircle, AlertCircle,
   Package as PackageIcon, CreditCard, Banknote, ChevronRight, Sun, Moon, Lock,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { Heart, ShoppingBag, ArrowRight, Trash2, ChevronRight, Home } from 'lucide-react';

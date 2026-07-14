@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ads } from '../../api';
-import { useApp } from '../../context/AppContext';
+import { ads } from '../../services/api';
+import { useApp } from '../../hooks/useApp';
 import { Plus, Edit, Trash2, X, Check, Search, Image as ImageIcon, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

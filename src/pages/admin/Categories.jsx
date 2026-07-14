@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { categories } from '../../api';
+import { categories } from '../../services/api';
 
 const AdminCategories = () => {
   const [categoriesList, setCategoriesList] = useState([]);

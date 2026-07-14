@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
-import { products } from '../api';
-import { useApp } from '../context/AppContext';
+import { products } from '../services/api';
+import { useApp } from '../hooks/useApp';
 import Skeleton from '../components/Skeleton';
 import useDebounce from '../hooks/useDebounce';
 
@@ -33,7 +33,7 @@ const Products = () => {
 
   useEffect(() => {
     // Fetch categories once on mount
-    import('../api').then(({ categories: catApi }) => {
+    import('../services/api').then(({ categories: catApi }) => {
       catApi.getAll().then(res => {
         const uniqueCategories = [...new Set(res.data.map(c => c.name))];
         setCategories(uniqueCategories);

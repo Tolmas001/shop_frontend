@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RotateCcw, CheckCircle, XCircle, Clock, DollarSign, Search, Filter, Package as PackageIcon, AlertCircle } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '../../hooks/useApp';
 
 const Refunds = () => {
   const { formatPrice, backendUrl } = useApp();
