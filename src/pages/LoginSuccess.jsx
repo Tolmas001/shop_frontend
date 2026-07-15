@@ -18,7 +18,9 @@ const LoginSuccess = () => {
         .then(res => {
           setUser(res.data.user);
           showNotification(t('login_success') || 'Muvaffaqiyatli kirdingiz!');
-          navigate('/');
+          const redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
+          localStorage.removeItem('redirectAfterLogin');
+          navigate(redirectPath);
         })
         .catch(err => {
           console.error('Error fetching user after Google login:', err);

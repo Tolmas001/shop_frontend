@@ -89,7 +89,10 @@ const AdminLogin = () => {
         <button 
           type="button"
           className="btn btn-outline"
-          onClick={() => window.location.href = `${config.backendUrl}/auth/google`}
+          onClick={() => {
+            localStorage.setItem('redirectAfterLogin', '/admin');
+            window.location.href = `${config.backendUrl}/auth/google`;
+          }}
           style={{ 
             width: '100%', 
             display: 'flex', 

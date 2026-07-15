@@ -49,6 +49,8 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
+    const redirectPath = searchParams.get('redirect') || '/';
+    localStorage.setItem('redirectAfterLogin', redirectPath);
     window.location.href = `${config.backendUrl}/auth/google`;
   };
 
