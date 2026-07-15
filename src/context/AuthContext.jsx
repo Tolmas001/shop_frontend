@@ -17,8 +17,10 @@ export const AuthProvider = ({ children }) => {
     
     if (urlToken) {
       localStorage.setItem('token', urlToken);
-      // Clean up the URL by removing the token
-      window.history.replaceState({}, document.title, window.location.pathname);
+      // Clean up the URL only if we are not on login-success
+      if (!window.location.pathname.includes('login-success')) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
     }
     
     const token = localStorage.getItem('token');
