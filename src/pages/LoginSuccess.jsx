@@ -16,10 +16,11 @@ const LoginSuccess = () => {
       // Fetch user data to update state immediately
       auth.me()
         .then(res => {
-          setUser(res.data.user);
+          const userData = res.data.user || res.data;
+          setUser(userData);
           showNotification(t('login_success') || 'Muvaffaqiyatli kirdingiz!');
           let redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
-          if ((res.data.user.role === 'admin' || res.data.user.role === 'superadmin') && redirectPath === '/') {
+          if (userData && (userData.role === 'admin' || userData.role === 'superadmin') && redirectPath === '/') {
             redirectPath = '/admin';
           }
           localStorage.removeItem('redirectAfterLogin');

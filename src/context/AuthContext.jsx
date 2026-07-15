@@ -29,7 +29,8 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       auth.me()
         .then(res => {
-          setUser(res.data.user);
+          const userData = res.data.user || res.data;
+          setUser(userData);
           fetchNotifications();
         })
         .catch(() => {
