@@ -12,7 +12,17 @@ export const AuthProvider = ({ children }) => {
   const { fetchNotifications } = useNotifications();
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlToken = urlParams.get('token');
+    
+    if (urlToken) {
+      localStorage.setItem('token', urlToken);
+      // Clean up the URL by removing the token
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
     const token = localStorage.getItem('token');
+    
     if (token) {
       setLoading(true);
       auth.me()
