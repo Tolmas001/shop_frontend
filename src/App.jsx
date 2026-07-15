@@ -28,6 +28,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
 import { useApp } from './hooks/useApp';
+import { AnimatePresence } from 'framer-motion';
+import QuickView from './components/QuickView';
 
 function App() {
   return (
@@ -41,10 +43,6 @@ function App() {
     </AppProviders>
   );
 }
-
-import { AnimatePresence } from 'framer-motion';
-import QuickView from './components/QuickView';
-
 function MainLayout() {
   const { loading, user, quickViewProduct, setQuickViewProduct } = useApp();
 
