@@ -40,6 +40,7 @@ const Login = () => {
       } else {
         await login(form.username, form.password);
       }
+      
       const redirectPath = searchParams.get('redirect') || '/';
       navigate(redirectPath);
     } catch (err) {

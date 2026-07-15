@@ -18,7 +18,10 @@ const LoginSuccess = () => {
         .then(res => {
           setUser(res.data.user);
           showNotification(t('login_success') || 'Muvaffaqiyatli kirdingiz!');
-          const redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
+          let redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
+          if ((res.data.user.role === 'admin' || res.data.user.role === 'superadmin') && redirectPath === '/') {
+            redirectPath = '/admin';
+          }
           localStorage.removeItem('redirectAfterLogin');
           navigate(redirectPath);
         })
