@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Store, DollarSign, Package as PackageIcon, CheckCircle, XCircle, Search, Filter, TrendingUp } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { adminFeatures } from '../../services/api';
 
 const Vendors = () => {
   const { formatPrice, backendUrl } = useApp();
@@ -13,7 +14,8 @@ const Vendors = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        // Mock data - would come from API
+        // Note: Backend doesn't have a vendors endpoint yet, so we'll use mock data
+        // This is a placeholder for when the backend endpoint is implemented
         const mockVendors = [
           { id: 1, name: 'TechStore LLC', email: 'techstore@example.com', products: 45, earnings: 45000000, status: 'approved', joined_at: '2024-01-10', rating: 4.8 },
           { id: 2, name: 'Mobile World', email: 'mobileworld@example.com', products: 32, earnings: 32000000, status: 'approved', joined_at: '2024-01-08', rating: 4.5 },
@@ -40,7 +42,7 @@ const Vendors = () => {
 
   const approveVendor = async (vendorId) => {
     try {
-      // Would call API to approve vendor
+      await adminFeatures.approveVendor(vendorId);
       setVendors(vendors.map(v => v.id === vendorId ? { ...v, status: 'approved' } : v));
     } catch (err) {
       console.error('Failed to approve vendor:', err);
@@ -49,7 +51,7 @@ const Vendors = () => {
 
   const rejectVendor = async (vendorId) => {
     try {
-      // Would call API to reject vendor
+      await adminFeatures.rejectVendor(vendorId);
       setVendors(vendors.map(v => v.id === vendorId ? { ...v, status: 'rejected' } : v));
     } catch (err) {
       console.error('Failed to reject vendor:', err);

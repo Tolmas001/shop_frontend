@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, AlertTriangle, Lock, UserX, Search, Filter, Eye, EyeOff, RefreshCw } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { security } from '../../services/api';
 
 const Security = () => {
   const { backendUrl } = useApp();
@@ -13,18 +14,59 @@ const Security = () => {
   useEffect(() => {
     const fetchSecurityLogs = async () => {
       try {
-        // Mock data - would come from API
-        const mockLogs = [
-          { id: 1, type: 'failed_login', user: 'unknown', ip: '192.168.1.100', message: 'Noto\'g\'ri parol (3 urinish)', severity: 'high', timestamp: '2024-01-15T14:30:00', blocked: false },
-          { id: 2, type: 'suspicious', user: 'ali@example.com', ip: '45.33.32.156', message: 'G\'ayrioddiy IP manzil', severity: 'medium', timestamp: '2024-01-15T12:15:00', blocked: false },
-          { id: 3, type: 'failed_login', user: 'nigora@example.com', ip: '103.21.244.0', message: 'Noto\'g\'ri parol (5 urinish)', severity: 'high', timestamp: '2024-01-15T10:45:00', blocked: true },
-          { id: 4, type: 'blocked', user: 'jamshid@example.com', ip: '178.62.43.22', message: 'Hisob bloklandi - ko\'p urinish', severity: 'critical', timestamp: '2024-01-14T18:20:00', blocked: true },
-          { id: 5, type: 'suspicious', user: 'zarina@example.com', ip: '139.59.1.1', message: 'Token invalidation - bir nechi qurilma', severity: 'medium', timestamp: '2024-01-14T15:30:00', blocked: false },
-          { id: 6, type: 'failed_login', user: 'unknown', ip: '104.238.140.39', message: 'Noto\'g\'ri parol (2 urinish)', severity: 'low', timestamp: '2024-01-14T11:00:00', blocked: false },
-          { id: 7, type: 'suspicious', user: 'sobir@example.com', ip: '167.99.5.1', message: 'Tez-tez login urinishlari', severity: 'medium', timestamp: '2024-01-13T16:45:00', blocked: false },
-          { id: 8, type: 'blocked', user: 'unknown', ip: '206.189.123.1', message: 'IP bloklandi - spam aktivligi', severity: 'critical', timestamp: '2024-01-13T09:30:00', blocked: true }
-        ];
-        setSecurityLogs(mockLogs);
+        // Fetch different types of security logs based on filter
+        if (filter === 'all' || filter === 'failed_login') {
+          const failedRes = await security.getFailedAttempts(50, 7);
+          const failedLogs = (failedRes.data || []).map(log => ({
+            id: log.id,
+            type: 'failed_login',
+            user: log.username || 'unknown',
+            ip: log.details?.ip || 'unknown',
+            message: 'Noto\'g\'ri parol',
+            severity: 'high',
+            timestamp: log.created_at,
+            blocked: false
+          }));
+          setSecurityLogs(failedLogs);
+        } else if (filter === 'suspicious') {
+          const suspiciousRes = await security.getSuspicious();
+          const suspiciousLogs = [];
+          
+          // Add suspicious IPs
+          (suspiciousRes.data?.suspicious_ips || []).forEach((item, idx) => {
+            suspiciousLogs.push({
+              id: `susp-${idx}`,
+              type: 'suspicious',
+              user: 'unknown',
+              ip: item.ip_address,
+              message: `Ko'p urinish: ${item.attempt_count}`,
+              severity: 'medium',
+              timestamp: item.last_attempt,
+              blocked: false
+            });
+          });
+          
+          setSecurityLogs(suspiciousLogs);
+        } else if (filter === 'blocked') {
+          const suspiciousRes = await security.getSuspicious();
+          const blockedLogs = [];
+          
+          // Add rapid signups as blocked
+          (suspiciousRes.data?.rapid_signups || []).forEach((item, idx) => {
+            blockedLogs.push({
+              id: `block-${idx}`,
+              type: 'blocked',
+              user: 'unknown',
+              ip: item.ip_address,
+              message: `Tez ro'yxatdan o'tish: ${item.signup_count}`,
+              severity: 'critical',
+              timestamp: item.last_signup,
+              blocked: true
+            });
+          });
+          
+          setSecurityLogs(blockedLogs);
+        }
       } catch (err) {
         console.error('Failed to fetch security logs:', err);
       } finally {
@@ -32,19 +74,18 @@ const Security = () => {
       }
     };
     fetchSecurityLogs();
-  }, []);
+  }, [filter]);
 
   const filteredLogs = securityLogs.filter(log => {
     const matchesSearch = log.user?.toLowerCase().includes(search.toLowerCase()) || 
                          log.ip?.includes(search) ||
                          log.message?.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter = filter === 'all' || log.type === filter;
-    return matchesSearch && matchesFilter;
+    return matchesSearch;
   });
 
   const unblockUser = async (logId) => {
     try {
-      // Would call API to unblock
+      // This would call an API to unblock - for now just update local state
       setSecurityLogs(securityLogs.map(log => log.id === logId ? { ...log, blocked: false, type: 'suspicious' } : log));
     } catch (err) {
       console.error('Failed to unblock:', err);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Send, Clock, CheckCircle, AlertCircle, Search, Filter, User, Calendar } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { adminFeatures } from '../../services/api';
 
 const Support = () => {
   const { backendUrl } = useApp();
@@ -15,15 +16,8 @@ const Support = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        // Mock data - would come from API
-        const mockTickets = [
-          { id: 1, user: 'Ali Karimov', email: 'ali@example.com', subject: 'Buyurtma kelmadi', message: 'Order #12345 hali kelmadi, 3 kun bo\'ldi', status: 'open', priority: 'high', created_at: '2024-01-15', replies: [] },
-          { id: 2, user: 'Nigora Rahimova', email: 'nigora@example.com', subject: 'To\'lov muammosi', message: 'Kartadan pul olib tashlandi lekin buyurtma tasdiqlanmadi', status: 'in_progress', priority: 'high', created_at: '2024-01-14', replies: [{ message: 'Tekshirib chiqamiz', admin: true, time: '2024-01-14' }] },
-          { id: 3, user: 'Jamshid Toshmatov', email: 'jamshid@example.com', subject: 'Mahsulot buzilgan', message: 'iPhone 14 Pro qutisi ochiq kelgan, ekranda iz bor', status: 'open', priority: 'medium', created_at: '2024-01-13', replies: [] },
-          { id: 4, user: 'Zarina Nazarova', email: 'zarina@example.com', subject: 'Noto\'g\'ri mahsulot', message: 'AirPods Pro o\'rniga oddiy AirPods kelgan', status: 'resolved', priority: 'medium', created_at: '2024-01-12', replies: [{ message: 'Almashtirib yuboramiz', admin: true, time: '2024-01-12' }] },
-          { id: 5, user: 'Sobir Qodirov', email: 'sobir@example.com', subject: 'Yetkazib berish kechikmoqda', message: 'Buyurtma 5 kun oldin berildi lekin hali yo\'lda', status: 'closed', priority: 'low', created_at: '2024-01-10', replies: [] }
-        ];
-        setTickets(mockTickets);
+        const res = await adminFeatures.getSupportTickets(filter === 'all' ? undefined : filter);
+        setTickets(res.data || []);
       } catch (err) {
         console.error('Failed to fetch tickets:', err);
       } finally {
@@ -31,34 +25,33 @@ const Support = () => {
       }
     };
     fetchTickets();
-  }, []);
+  }, [filter]);
 
   const filteredTickets = tickets.filter(t => {
     const matchesSearch = t.subject?.toLowerCase().includes(search.toLowerCase()) || 
-                         t.user?.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter = filter === 'all' || t.status === filter;
-    return matchesSearch && matchesFilter;
+                         t.username?.toLowerCase().includes(search.toLowerCase());
+    return matchesSearch;
   });
 
   const updateTicketStatus = (ticketId, newStatus) => {
     setTickets(tickets.map(t => t.id === ticketId ? { ...t, status: newStatus } : t));
   };
 
-  const sendReply = () => {
+  const sendReply = async () => {
     if (!reply.trim() || !selectedTicket) return;
     
-    const newReply = {
-      message: reply,
-      admin: true,
-      time: new Date().toISOString()
-    };
-    
-    setTickets(tickets.map(t => 
-      t.id === selectedTicket.id 
-        ? { ...t, replies: [...t.replies, newReply], status: 'in_progress' } 
-        : t
-    ));
-    setReply('');
+    try {
+      await adminFeatures.replySupportTicket(selectedTicket.id, reply);
+      
+      // Refresh tickets
+      const res = await adminFeatures.getSupportTickets(filter === 'all' ? undefined : filter);
+      setTickets(res.data || []);
+      
+      setReply('');
+      setSelectedTicket(null);
+    } catch (err) {
+      console.error('Failed to send reply:', err);
+    }
   };
 
   const getStatusColor = (status) => {
@@ -169,10 +162,10 @@ const Support = () => {
                     </div>
                     <div>
                       <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '4px' }}>#{ticket.id} - {ticket.subject}</h3>
-                      <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: 0 }}>{ticket.user}</p>
+                      <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: 0 }}>{ticket.username || ticket.user}</p>
                     </div>
                   </div>
-                  <p style={{ fontSize: '14px', color: 'var(--text-main)', marginBottom: '12px' }}>{ticket.message}</p>
+                  <p style={{ fontSize: '14px', color: 'var(--text-main)', marginBottom: '12px' }}>{ticket.message_count > 0 ? `${ticket.message_count} ta xabar` : 'Yangi ticket'}</p>
                   <div style={{ display: 'flex', gap: '16px', fontSize: '12px', color: 'var(--text-muted)' }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <Calendar size={14} />

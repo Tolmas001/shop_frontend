@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RotateCcw, CheckCircle, XCircle, Clock, DollarSign, Search, Filter, Package as PackageIcon, AlertCircle } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { adminFeatures } from '../../services/api';
 
 const Refunds = () => {
   const { formatPrice, backendUrl } = useApp();
@@ -13,15 +14,8 @@ const Refunds = () => {
   useEffect(() => {
     const fetchRefunds = async () => {
       try {
-        // Mock data - would come from API
-        const mockRefunds = [
-          { id: 1, order_id: 12345, user: 'Ali Karimov', product: 'iPhone 14 Pro', reason: 'Mahsulot buzilgan', amount: 12000000, status: 'pending', requested_at: '2024-01-15T10:30:00' },
-          { id: 2, order_id: 12346, user: 'Nigora Rahimova', product: 'AirPods Pro', reason: 'Noto\'g\'ri mahsulot', amount: 2500000, status: 'approved', requested_at: '2024-01-14T15:45:00', processed_at: '2024-01-15T09:00:00' },
-          { id: 3, order_id: 12347, user: 'Jamshid Toshmatov', product: 'MacBook Air', reason: 'Yetkazib berilmadi', amount: 15000000, status: 'rejected', requested_at: '2024-01-13T09:20:00', processed_at: '2024-01-14T11:30:00' },
-          { id: 4, order_id: 12348, user: 'Zarina Nazarova', product: 'Apple Watch', reason: 'Sifat past', amount: 3000000, status: 'pending', requested_at: '2024-01-12T14:00:00' },
-          { id: 5, order_id: 12349, user: 'Sobir Qodirov', product: 'iPad Pro', reason: 'Buyurtma bekor qilindi', amount: 7500000, status: 'approved', requested_at: '2024-01-10T11:30:00', processed_at: '2024-01-11T16:00:00' }
-        ];
-        setRefunds(mockRefunds);
+        const res = await adminFeatures.getRefunds(filter === 'all' ? undefined : filter);
+        setRefunds(res.data || []);
       } catch (err) {
         console.error('Failed to fetch refunds:', err);
       } finally {
@@ -29,19 +23,18 @@ const Refunds = () => {
       }
     };
     fetchRefunds();
-  }, []);
+  }, [filter]);
 
   const filteredRefunds = refunds.filter(r => {
-    const matchesSearch = r.user?.toLowerCase().includes(search.toLowerCase()) || 
-                         r.product?.toLowerCase().includes(search.toLowerCase()) ||
+    const matchesSearch = r.username?.toLowerCase().includes(search.toLowerCase()) || 
+                         r.email?.toLowerCase().includes(search.toLowerCase()) ||
                          r.order_id?.toString().includes(search);
-    const matchesFilter = filter === 'all' || r.status === filter;
-    return matchesSearch && matchesFilter;
+    return matchesSearch;
   });
 
   const approveRefund = async (refundId) => {
     try {
-      // Would call API to approve refund
+      await adminFeatures.approveRefund(refundId);
       setRefunds(refunds.map(r => r.id === refundId ? { ...r, status: 'approved', processed_at: new Date().toISOString() } : r));
     } catch (err) {
       console.error('Failed to approve refund:', err);
@@ -50,7 +43,7 @@ const Refunds = () => {
 
   const rejectRefund = async (refundId) => {
     try {
-      // Would call API to reject refund
+      await adminFeatures.rejectRefund(refundId);
       setRefunds(refunds.map(r => r.id === refundId ? { ...r, status: 'rejected', processed_at: new Date().toISOString() } : r));
     } catch (err) {
       console.error('Failed to reject refund:', err);
@@ -182,14 +175,7 @@ const Refunds = () => {
                     </div>
                     <div>
                       <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '4px' }}>Order #{refund.order_id}</h3>
-                      <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: 0 }}>{refund.user}</p>
-                    </div>
-                  </div>
-
-                  <div style={{ marginBottom: '16px' }}>
-                    <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Mahsulot</label>
-                    <div style={{ padding: '12px', background: '#f8fafc', borderRadius: '8px' }}>
-                      <span style={{ fontSize: '14px', fontWeight: 600 }}>{refund.product}</span>
+                      <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: 0 }}>{refund.username || refund.customer_name}</p>
                     </div>
                   </div>
 
@@ -204,7 +190,7 @@ const Refunds = () => {
                   <div style={{ display: 'flex', gap: '24px', fontSize: '14px', color: 'var(--text-muted)' }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <Clock size={14} />
-                      {getTimeAgo(refund.requested_at)}
+                      {getTimeAgo(refund.created_at)}
                     </span>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <DollarSign size={14} />

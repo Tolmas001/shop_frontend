@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Brain, TrendingUp, TrendingDown, AlertTriangle, Sparkles, RefreshCw } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { analytics } from '../../services/api';
 
 const AI = () => {
   const { formatPrice } = useApp();
@@ -11,7 +12,10 @@ const AI = () => {
   useEffect(() => {
     const fetchAIRecommendations = async () => {
       try {
-        // Mock data - would come from AI API
+        // Note: Backend doesn't have an AI endpoint yet
+        // This would require ML/AI service integration
+        // For now, we use mock data as this is a demo feature
+        // In production, this would call an AI API endpoint
         setRecommendations({
           trendingProducts: [
             { id: 1, name: 'iPhone 14 Pro', reason: 'Sotuvlar 45% oshdi', action: 'increase', confidence: 92 },

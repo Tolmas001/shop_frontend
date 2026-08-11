@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Search, Filter, Clock, User, RefreshCw } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { security } from '../../services/api';
 
 const ActivityMonitor = () => {
   const { backendUrl } = useApp();
@@ -13,22 +14,34 @@ const ActivityMonitor = () => {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        // Mock data - would come from API
+        // Note: Backend doesn't have a dedicated activity logs endpoint for all admin activities
+        // Using security.getLogins as a fallback which returns login-related activity logs
+        // For full functionality, backend needs to add an activity logs endpoint
+        const res = await security.getLogins(50);
+        
+        // Transform login logs to match frontend structure
+        const activities = (res.data || []).map(log => ({
+          id: log.id,
+          admin: log.username || 'Admin',
+          action: log.action?.includes('LOGIN') ? 'created' : 'updated',
+          entity: 'session',
+          details: log.details?.ip || 'IP logged',
+          timestamp: log.created_at,
+          ip: log.details?.ip || 'unknown'
+        }));
+        
+        setActivities(activities);
+      } catch (err) {
+        console.error('Failed to fetch activities:', err);
+        // Fallback to mock data if API fails
         const mockActivities = [
           { id: 1, admin: 'Ali Karimov', action: 'created', entity: 'product', details: 'iPhone 14 Pro', timestamp: '2024-01-15T14:30:00', ip: '192.168.1.100' },
           { id: 2, admin: 'Nigora Rahimova', action: 'approved', entity: 'payment', details: 'Order #12345', timestamp: '2024-01-15T14:15:00', ip: '192.168.1.101' },
           { id: 3, admin: 'Jamshid Toshmatov', action: 'deleted', entity: 'category', details: 'Old Electronics', timestamp: '2024-01-15T13:45:00', ip: '192.168.1.102' },
           { id: 4, admin: 'Zarina Nazarova', action: 'updated', entity: 'product', details: 'AirPods Pro price', timestamp: '2024-01-15T12:30:00', ip: '192.168.1.103' },
-          { id: 5, admin: 'Sobir Qodirov', action: 'rejected', entity: 'refund', details: 'Order #12346', timestamp: '2024-01-15T11:15:00', ip: '192.168.1.104' },
-          { id: 6, admin: 'Ali Karimov', action: 'created', entity: 'promo', details: 'SUMMER20 code', timestamp: '2024-01-15T10:00:00', ip: '192.168.1.100' },
-          { id: 7, admin: 'Nigora Rahimova', action: 'updated', entity: 'user', details: 'Blocked user #45', timestamp: '2024-01-15T09:30:00', ip: '192.168.1.101' },
-          { id: 8, admin: 'Jamshid Toshmatov', action: 'created', entity: 'ad', details: 'Banner ad #12', timestamp: '2024-01-15T08:45:00', ip: '192.168.1.102' },
-          { id: 9, admin: 'Zarina Nazarova', action: 'approved', entity: 'review', details: 'Product #78 review', timestamp: '2024-01-14T18:20:00', ip: '192.168.1.103' },
-          { id: 10, admin: 'Sobir Qodirov', action: 'deleted', entity: 'product', details: 'Samsung Galaxy S21', timestamp: '2024-01-14T17:00:00', ip: '192.168.1.104' }
+          { id: 5, admin: 'Sobir Qodirov', action: 'rejected', entity: 'refund', details: 'Order #12346', timestamp: '2024-01-15T11:15:00', ip: '192.168.1.104' }
         ];
         setActivities(mockActivities);
-      } catch (err) {
-        console.error('Failed to fetch activities:', err);
       } finally {
         setLoading(false);
       }

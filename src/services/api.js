@@ -127,4 +127,49 @@ export const ads = {
   delete: (id) => api.delete(`ads/${id}`),
 };
 
+export const analytics = {
+  getAbandonedCarts: () => api.get('analytics/abandoned-carts'),
+  getSearchQueries: () => api.get('analytics/search-queries'),
+  getWishlists: () => api.get('analytics/wishlists'),
+  getCoupons: () => api.get('analytics/coupons'),
+  getActivityLogs: () => api.get('admin/activity-logs'),
+  getSecurityLogs: () => api.get('admin/security-logs'),
+  getOverview: () => api.get('admin/analytics/overview'),
+  getSales: (range) => api.get('admin/analytics/sales', { params: { range } }),
+  getRevenue: (from, to) => api.get('admin/analytics/revenue', { params: { from, to } }),
+  getTopProducts: (limit, period) => api.get('admin/analytics/top-products', { params: { limit, period } }),
+  getCouponsStats: () => api.get('admin/coupons/stats'),
+  getWishlistStats: () => api.get('admin/wishlist/stats'),
+  getSearchStats: () => api.get('admin/search/stats'),
+};
+
+export const adminFeatures = {
+  getBackups: () => api.get('admin/backups'),
+  createBackup: (type) => api.post('admin/backups/create', { backup_type: type }),
+  restoreBackup: (filename) => api.post('admin/backups/restore', { filename }),
+  deleteBackup: (filename) => api.delete(`admin/backups/${filename}`),
+  getSupportTickets: (status) => api.get('admin/support', { params: { status } }),
+  getSupportTicket: (id) => api.get(`admin/support/${id}`),
+  replySupportTicket: (id, message) => api.post(`admin/support/${id}/reply`, { message }),
+  resolveSupportTicket: (id) => api.patch(`admin/support/${id}/resolve`),
+  getRefunds: (status) => api.get('admin/refunds', { params: { status } }),
+  approveRefund: (id) => api.patch(`admin/refunds/${id}/approve`),
+  rejectRefund: (id) => api.patch(`admin/refunds/${id}/reject`),
+  getVendors: () => api.get('admin/vendors'),
+  approveVendor: (id) => api.patch(`admin/vendors/${id}/approve`),
+  rejectVendor: (id) => api.patch(`admin/vendors/${id}/reject`),
+};
+
+export const security = {
+  getLogins: (limit, userId) => api.get('admin/security/logins', { params: { limit, user_id: userId } }),
+  getFailedAttempts: (limit, days) => api.get('admin/security/failed-attempts', { params: { limit, days } }),
+  getSuspicious: () => api.get('admin/security/suspicious'),
+  getOverview: () => api.get('admin/security/overview'),
+};
+
+export const ai = {
+  getInsights: () => api.get('ai/insights'),
+  chat: (message) => api.post('ai/chat', { message }),
+};
+
 export default api;

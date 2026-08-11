@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Mail, Clock, DollarSign, Send, Search, TrendingUp } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { analytics } from '../../services/api';
 
 const AbandonedCarts = () => {
   const { formatPrice, backendUrl } = useApp();
@@ -12,7 +13,10 @@ const AbandonedCarts = () => {
   useEffect(() => {
     const fetchAbandonedCarts = async () => {
       try {
-        // Mock data - would come from API
+        // Note: Backend doesn't have an abandoned carts endpoint yet
+        // This would require tracking cart abandonment in the database
+        // For now, we use mock data as this is a demo feature
+        // In production, this would call an API endpoint like analytics.getAbandonedCarts()
         const mockCarts = [
           { id: 1, user: 'Ali Karimov', email: 'ali@example.com', items: [{ name: 'iPhone 14 Pro', price: 12000000, quantity: 1 }], total: 12000000, abandoned_at: '2024-01-15T10:30:00', recovery_sent: false },
           { id: 2, user: 'Nigora Rahimova', email: 'nigora@example.com', items: [{ name: 'AirPods Pro', price: 2500000, quantity: 2 }], total: 5000000, abandoned_at: '2024-01-14T15:45:00', recovery_sent: true },

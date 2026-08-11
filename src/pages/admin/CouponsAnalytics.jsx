@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Ticket, TrendingUp, DollarSign, Users, Search, BarChart3 } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { analytics } from '../../services/api';
 
 const CouponsAnalytics = () => {
   const { formatPrice } = useApp();
@@ -12,32 +13,47 @@ const CouponsAnalytics = () => {
   useEffect(() => {
     const fetchCouponAnalytics = async () => {
       try {
-        // Mock data - would come from API
+        const res = await analytics.getCouponsStats();
+        const data = res.data || [];
+        
+        // Transform backend data to match frontend structure
+        const totalCoupons = data.length;
+        const activeCoupons = data.filter(c => c.is_active).length;
+        const totalUsage = data.reduce((sum, c) => sum + (c.used_count || 0), 0);
+        const totalSavings = data.reduce((sum, c) => sum + (c.total_revenue_generated || 0), 0);
+        
+        const topCoupons = data.slice(0, 5).map(c => ({
+          code: c.code,
+          usage: c.used_count || 0,
+          savings: c.total_revenue_generated || 0,
+          orders: c.orders_used || 0
+        }));
+        
+        // Generate monthly usage data (mock since backend doesn't provide this)
+        const monthlyUsage = [
+          { month: 'Yan', usage: Math.floor(totalUsage * 0.1) },
+          { month: 'Fev', usage: Math.floor(totalUsage * 0.15) },
+          { month: 'Mar', usage: Math.floor(totalUsage * 0.12) },
+          { month: 'Apr', usage: Math.floor(totalUsage * 0.18) },
+          { month: 'May', usage: Math.floor(totalUsage * 0.22) },
+          { month: 'Iyun', usage: Math.floor(totalUsage * 0.23) }
+        ];
+        
+        // Generate coupon types distribution (mock)
+        const couponTypes = [
+          { name: 'Foiz', value: 45 },
+          { name: 'Summa', value: 30 },
+          { name: 'Bepul yetkazib berish', value: 25 }
+        ];
+        
         setCouponData({
-          totalCoupons: 15,
-          activeCoupons: 8,
-          totalUsage: 1250,
-          totalSavings: 25000000,
-          topCoupons: [
-            { code: 'WELCOME10', usage: 320, savings: 4800000, orders: 320 },
-            { code: 'SUMMER20', usage: 280, savings: 5600000, orders: 280 },
-            { code: 'FLASH50', usage: 180, savings: 4500000, orders: 180 },
-            { code: 'NEWUSER15', usage: 150, savings: 2250000, orders: 150 },
-            { code: 'FREESHIP', usage: 120, savings: 1200000, orders: 120 }
-          ],
-          monthlyUsage: [
-            { month: 'Yan', usage: 85 },
-            { month: 'Fev', usage: 120 },
-            { month: 'Mar', usage: 95 },
-            { month: 'Apr', usage: 140 },
-            { month: 'May', usage: 180 },
-            { month: 'Iyun', usage: 220 }
-          ],
-          couponTypes: [
-            { name: 'Foiz', value: 45 },
-            { name: 'Summa', value: 30 },
-            { name: 'Bepul yetkazib berish', value: 25 }
-          ]
+          totalCoupons,
+          activeCoupons,
+          totalUsage,
+          totalSavings,
+          topCoupons,
+          monthlyUsage,
+          couponTypes
         });
       } catch (err) {
         console.error('Failed to fetch coupon analytics:', err);

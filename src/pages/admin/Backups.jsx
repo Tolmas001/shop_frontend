@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Database, Download, Trash2, Calendar, HardDrive, Clock, AlertCircle } from 'lucide-react';
 import { useApp } from '../../hooks/useApp';
+import { adminFeatures } from '../../services/api';
 
 const Backups = () => {
   const { backendUrl } = useApp();
@@ -12,17 +13,8 @@ const Backups = () => {
   useEffect(() => {
     const fetchBackups = async () => {
       try {
-        // Mock data - would come from API
-        const mockBackups = [
-          { id: 1, name: 'daily_backup_2024-01-15', size: '245 MB', date: '2024-01-15T03:00:00', type: 'daily', status: 'completed' },
-          { id: 2, name: 'daily_backup_2024-01-14', size: '242 MB', date: '2024-01-14T03:00:00', type: 'daily', status: 'completed' },
-          { id: 3, name: 'weekly_backup_2024-01-13', size: '890 MB', date: '2024-01-13T03:00:00', type: 'weekly', status: 'completed' },
-          { id: 4, name: 'daily_backup_2024-01-13', size: '238 MB', date: '2024-01-13T03:00:00', type: 'daily', status: 'completed' },
-          { id: 5, name: 'manual_backup_2024-01-12', size: '235 MB', date: '2024-01-12T15:30:00', type: 'manual', status: 'completed' },
-          { id: 6, name: 'daily_backup_2024-01-12', size: '236 MB', date: '2024-01-12T03:00:00', type: 'daily', status: 'completed' },
-          { id: 7, name: 'weekly_backup_2024-01-06', size: '875 MB', date: '2024-01-06T03:00:00', type: 'weekly', status: 'completed' }
-        ];
-        setBackups(mockBackups);
+        const res = await adminFeatures.getBackups();
+        setBackups(res.data || []);
       } catch (err) {
         console.error('Failed to fetch backups:', err);
       } finally {
@@ -35,17 +27,10 @@ const Backups = () => {
   const createBackup = async () => {
     setCreatingBackup(true);
     try {
-      // Would call API to create backup
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const newBackup = {
-        id: backups.length + 1,
-        name: `manual_backup_${new Date().toISOString().split('T')[0]}`,
-        size: 'Calculating...',
-        date: new Date().toISOString(),
-        type: 'manual',
-        status: 'completed'
-      };
-      setBackups([newBackup, ...backups]);
+      await adminFeatures.createBackup('manual');
+      // Refresh backups list
+      const res = await adminFeatures.getBackups();
+      setBackups(res.data || []);
     } catch (err) {
       console.error('Failed to create backup:', err);
     } finally {
@@ -53,18 +38,18 @@ const Backups = () => {
     }
   };
 
-  const deleteBackup = async (backupId) => {
+  const deleteBackup = async (filename) => {
     try {
-      // Would call API to delete backup
-      setBackups(backups.filter(b => b.id !== backupId));
+      await adminFeatures.deleteBackup(filename);
+      setBackups(backups.filter(b => b.filename !== filename));
     } catch (err) {
       console.error('Failed to delete backup:', err);
     }
   };
 
-  const downloadBackup = (backupName) => {
-    // Would trigger download
-    console.log('Downloading:', backupName);
+  const downloadBackup = (filename) => {
+    // Trigger download via backend
+    window.open(`${backendUrl}/uploads/backups/${filename}`, '_blank');
   };
 
   const getTypeColor = (type) => {
@@ -90,7 +75,7 @@ const Backups = () => {
   }
 
   const totalSize = backups.reduce((sum, b) => {
-    const sizeMB = parseFloat(b.size);
+    const sizeMB = parseFloat(b.size || 0);
     return sum + sizeMB;
   }, 0);
 
@@ -196,8 +181,8 @@ const Backups = () => {
               </thead>
               <tbody>
                 {backups.map((backup) => (
-                  <tr key={backup.id}>
-                    <td style={{ fontWeight: 700 }}>{backup.name}</td>
+                  <tr key={backup.filename}>
+                    <td style={{ fontWeight: 700 }}>{backup.filename}</td>
                     <td>
                       <span style={{ 
                         padding: '4px 12px', 
@@ -211,18 +196,18 @@ const Backups = () => {
                       </span>
                     </td>
                     <td>{backup.size}</td>
-                    <td style={{ fontSize: '14px' }}>{formatDate(backup.date)}</td>
+                    <td style={{ fontSize: '14px' }}>{formatDate(backup.created_at)}</td>
                     <td>
                       <div style={{ display: 'flex', gap: '8px' }}>
                         <button
-                          onClick={() => downloadBackup(backup.name)}
+                          onClick={() => downloadBackup(backup.filename)}
                           style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#3B82F6', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px' }}
                         >
                           <Download size={16} />
                           Yuklab olish
                         </button>
                         <button
-                          onClick={() => deleteBackup(backup.id)}
+                          onClick={() => deleteBackup(backup.filename)}
                           style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#EF4444', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px' }}
                         >
                           <Trash2 size={16} />
