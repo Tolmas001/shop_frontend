@@ -450,7 +450,7 @@ const Home = () => {
                   <img src={review.img} alt={review.name} className="reviewer-avatar" />
                   <div className="reviewer-meta">
                     <h4>{review.name}</h4>
-                    <p>{review.role}</p>
+                    <p>{review.role || 'Customer'}</p>
                     <div className="reviewer-stars">
                       {[1, 2, 3, 4, 5].map(star => (
                         <Star key={star} size={12} fill={star <= review.rating ? "#F59E0B" : "none"} color={star <= review.rating ? "#F59E0B" : "#D1D5DB"} />

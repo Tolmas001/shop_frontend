@@ -114,7 +114,7 @@ function AdminLayout() {
   
   if (loading) return null;
   
-  if (!user || (user.role !== 'admin' && user.role !== 'superadmin')) {
+  if (!user || user?.role !== 'admin' && user?.role !== 'superadmin') {
     return (
       <Routes>
         <Route path="/login" element={<AdminLogin />} />

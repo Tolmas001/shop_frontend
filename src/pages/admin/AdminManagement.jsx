@@ -76,7 +76,7 @@ const AdminManagement = () => {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  style={{ opacity: u.role === 'superadmin' ? 0.6 : 1 }}
+                  style={{ opacity: u?.role === 'superadmin' ? 0.6 : 1 }}
                 >
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -102,12 +102,12 @@ const AdminManagement = () => {
                   <td>
                     <span style={{ 
                       padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600,
-                      background: u.role === 'superadmin' ? '#FEF3C7' : (u.role === 'admin' ? '#EEF2FF' : '#F3F4F6'),
-                      color: u.role === 'superadmin' ? '#D97706' : (u.role === 'admin' ? '#4F46E5' : '#4B5563'),
+                      background: u?.role === 'superadmin' ? '#FEF3C7' : (u?.role === 'admin' ? '#EEF2FF' : '#F3F4F6'),
+                      color: u?.role === 'superadmin' ? '#D97706' : (u?.role === 'admin' ? '#4F46E5' : '#4B5563'),
                       display: 'inline-flex', alignItems: 'center', gap: '4px'
                     }}>
-                      {u.role === 'superadmin' ? <ShieldAlert size={12} /> : (u.role === 'admin' ? <Shield size={12} /> : <User size={12} />)}
-                      {u.role}
+                      {u?.role === 'superadmin' ? <ShieldAlert size={12} /> : (u?.role === 'admin' ? <Shield size={12} /> : <User size={12} />)}
+                      {u?.role || 'user'}
                     </span>
                   </td>
                   <td>
@@ -117,19 +117,19 @@ const AdminManagement = () => {
                     </div>
                   </td>
                   <td style={{ textAlign: 'right' }}>
-                    {u.role !== 'superadmin' ? (
+                    {u?.role !== 'superadmin' ? (
                       <button 
-                        className={`btn ${u.role === 'admin' ? 'btn-danger-lite' : 'btn-primary'}`}
+                        className={`btn ${u?.role === 'admin' ? 'btn-danger-lite' : 'btn-primary'}`}
                         disabled={updatingId === u.id}
-                        onClick={() => handleRoleToggle(u.id, u.role)}
+                        onClick={() => handleRoleToggle(u.id, u?.role || 'user')}
                         style={{ 
                           padding: '8px 16px', borderRadius: '12px', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '8px',
-                          background: u.role === 'admin' ? '#FEE2E2' : '#2563EB',
-                          color: u.role === 'admin' ? '#DC2626' : 'white',
+                          background: u?.role === 'admin' ? '#FEE2E2' : '#2563EB',
+                          color: u?.role === 'admin' ? '#DC2626' : 'white',
                           border: 'none', cursor: 'pointer'
                         }}
                       >
-                        {updatingId === u.id ? '...' : (u.role === 'admin' ? 'Adminlikni olish' : 'Admin qilish')}
+                        {updatingId === u.id ? '...' : (u?.role === 'admin' ? 'Adminlikni olish' : 'Admin qilish')}
                       </button>
                     ) : (
                       <span style={{ color: '#9CA3AF', fontSize: '12px' }}>Super Admin o'zgarmas</span>

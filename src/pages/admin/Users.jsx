@@ -99,12 +99,12 @@ const AdminUsers = () => {
                   <td>
                     <span style={{ 
                       padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600,
-                      background: u.role === 'admin' ? '#EEF2FF' : '#F3F4F6',
-                      color: u.role === 'admin' ? '#4F46E5' : '#4B5563',
+                      background: u?.role === 'admin' ? '#EEF2FF' : '#F3F4F6',
+                      color: u?.role === 'admin' ? '#4F46E5' : '#4B5563',
                       display: 'inline-flex', alignItems: 'center', gap: '4px'
                     }}>
-                      {u.role === 'admin' && <Shield size={12} />}
-                      {u.role}
+                      {u?.role === 'admin' && <Shield size={12} />}
+                      {u?.role || 'user'}
                     </span>
                   </td>
                   <td>

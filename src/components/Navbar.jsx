@@ -215,11 +215,11 @@ const Navbar = () => {
                       />
                     </div>
                   </Link>
-                  {(user.role === 'admin' || user.role === 'superadmin') && (
+                  {user?.role === 'admin' || user?.role === 'superadmin' ? (
                     <Link to="/admin" className="nav-btn" title={t('admin')}>
                       <LayoutDashboard size={22} color="#2563EB" />
                     </Link>
-                  )}
+                  ) : null}
                   <button onClick={handleLogout} className="nav-btn logout-desktop" title={t('logout')}>
                     <LogOut size={22} />
                   </button>
@@ -305,11 +305,11 @@ const Navbar = () => {
               <Link to="/profile" className="drawer-link" onClick={() => setIsMobileMenuOpen(false)}>
                 <User className="drawer-link-icon" size={20} /> {t('profile')}
               </Link>
-              {(user.role === 'admin' || user.role === 'superadmin') && (
+              {user?.role === 'admin' || user?.role === 'superadmin' ? (
                 <Link to="/admin" className="drawer-link" onClick={() => setIsMobileMenuOpen(false)}>
                   <LayoutDashboard className="drawer-link-icon" size={20} /> {t('admin')}
                 </Link>
-              )}
+              ) : null}
               <button className="drawer-link" style={{ color: 'var(--error)' }} onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }}>
                 <LogOut className="drawer-link-icon" size={20} style={{ color: 'var(--error)' }} /> {t('logout')}
               </button>

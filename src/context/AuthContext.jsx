@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlToken = urlParams.get('token');
-    
+
     if (urlToken) {
       localStorage.setItem('token', urlToken);
       // Clean up the URL only if we are not on login-success
@@ -22,18 +22,48 @@ export const AuthProvider = ({ children }) => {
         window.history.replaceState({}, document.title, window.location.pathname);
       }
     }
-    
+
     const token = localStorage.getItem('token');
-    
+
     if (token) {
       setLoading(true);
       auth.me()
         .then(res => {
-          const userData = res.data.user || res.data;
-          setUser(userData);
-          fetchNotifications();
+          const userData = res.data?.user || res.data;
+          console.log('AuthContext - User data from /api/auth/me:', userData);
+          
+          if (userData && userData.id && userData.username) {
+            // Ensure role exists, default to 'user' if missing
+            if (!userData.role) {
+              userData.role = 'user';
+            }
+            
+            // Create a safe user object with all required fields
+            const safeUser = {
+              id: userData.id,
+              username: userData.username,
+              email: userData.email,
+              role: userData.role || 'user',
+              image: userData.image,
+              full_name: userData.full_name,
+              phone: userData.phone,
+              points: userData.points || 0,
+              notifications_enabled: userData.notifications_enabled !== false,
+              privacy_private: userData.privacy_private || false,
+              address_list: userData.address_list || [],
+              saved_cards: userData.saved_cards || []
+            };
+            
+            setUser(safeUser);
+            fetchNotifications();
+          } else {
+            console.error('AuthContext - Invalid user data in response:', userData);
+            localStorage.removeItem('token');
+            setUser(null);
+          }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error('AuthContext - Error fetching user:', err);
           localStorage.removeItem('token');
           setUser(null);
         })
@@ -46,19 +76,75 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     const res = await auth.login(username, password);
     localStorage.setItem('token', res.data.accessToken);
-    setUser(res.data.user);
+    
+    // Create safe user object
+    const userData = res.data.user;
+    const safeUser = {
+      id: userData.id,
+      username: userData.username,
+      email: userData.email,
+      role: userData.role || 'user',
+      image: userData.image,
+      full_name: userData.full_name,
+      phone: userData.phone,
+      points: userData.points || 0,
+      notifications_enabled: userData.notifications_enabled !== false,
+      privacy_private: userData.privacy_private || false,
+      address_list: userData.address_list || [],
+      saved_cards: userData.saved_cards || []
+    };
+    
+    setUser(safeUser);
     fetchNotifications();
   };
 
   const googleLogin = async (credential) => {
     const res = await auth.googleLogin(credential);
     localStorage.setItem('token', res.data.accessToken);
-    setUser(res.data.user);
+    
+    // Create safe user object
+    const userData = res.data.user;
+    const safeUser = {
+      id: userData.id,
+      username: userData.username,
+      email: userData.email,
+      role: userData.role || 'user',
+      image: userData.image,
+      full_name: userData.full_name,
+      phone: userData.phone,
+      points: userData.points || 0,
+      notifications_enabled: userData.notifications_enabled !== false,
+      privacy_private: userData.privacy_private || false,
+      address_list: userData.address_list || [],
+      saved_cards: userData.saved_cards || []
+    };
+    
+    setUser(safeUser);
   };
 
   const register = async (username, email, password) => {
-    await auth.register(username, email, password);
-    await login(username, password);
+    const res = await auth.register(username, email, password);
+    localStorage.setItem('token', res.data.accessToken);
+    
+    // Create safe user object
+    const userData = res.data.user;
+    const safeUser = {
+      id: userData.id,
+      username: userData.username,
+      email: userData.email,
+      role: userData.role || 'user',
+      image: userData.image,
+      full_name: userData.full_name,
+      phone: userData.phone,
+      points: userData.points || 0,
+      notifications_enabled: userData.notifications_enabled !== false,
+      privacy_private: userData.privacy_private || false,
+      address_list: userData.address_list || [],
+      saved_cards: userData.saved_cards || []
+    };
+    
+    setUser(safeUser);
+    fetchNotifications();
   };
 
   const updateProfile = async (data) => {
