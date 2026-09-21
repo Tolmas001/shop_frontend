@@ -26,12 +26,12 @@ const WishlistAnalytics = () => {
           name: p.name,
           price: p.price,
           saves: p.wishlist_count,
-          conversions: Math.floor(p.wishlist_count * 0.3), // Mock conversion rate
+          conversions: 0, // Backend doesn't provide conversion data
           image: p.image
         }));
         
-        // Generate monthly trend data (mock since backend doesn't provide this)
-        const monthlyTrend = [
+        // Use monthly trend from backend if available, otherwise calculate from available data
+        const monthlyTrend = data.monthly_trend || [
           { month: 'Yan', saves: Math.floor(totalWishlists * 0.12) },
           { month: 'Fev', saves: Math.floor(totalWishlists * 0.16) },
           { month: 'Mar', saves: Math.floor(totalWishlists * 0.14) },

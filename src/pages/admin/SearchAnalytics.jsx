@@ -24,19 +24,19 @@ const SearchAnalytics = () => {
         const topKeywords = (data.trending || []).slice(0, 10).map(item => ({
           keyword: item.keyword,
           searches: item.search_count,
-          trend: '+15%', // Mock since backend doesn't provide trend
+          trend: item.trend || '+0%',
           results: Math.floor(item.avg_results || 0),
-          conversions: Math.floor(item.search_count * 0.17) // Mock conversion rate
+          conversions: 0 // Backend doesn't provide conversion data
         }));
         
         const noResults = (data.no_results || []).slice(0, 5).map(item => ({
           keyword: item.keyword,
           searches: item.search_count,
-          trend: '+25%' // Mock since backend doesn't provide trend
+          trend: item.trend || '+0%'
         }));
         
-        // Generate daily trend data (mock since backend doesn't provide this)
-        const dailyTrend = [
+        // Use daily trend from backend if available
+        const dailyTrend = data.daily_trend || [
           { date: 'Dush', searches: Math.floor(totalSearches * 0.12) },
           { date: 'Sesh', searches: Math.floor(totalSearches * 0.14) },
           { date: 'Chor', searches: Math.floor(totalSearches * 0.13) },

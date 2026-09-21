@@ -107,6 +107,23 @@ export const demo = {
   seed: () => api.post('demo/seed')
 };
 
+export const adminFeatures = {
+  getVendors: () => api.get('admin/vendors'),
+  approveVendor: (id) => api.patch(`admin/vendors/${id}/approve`),
+  rejectVendor: (id) => api.patch(`admin/vendors/${id}/reject`),
+  getBackups: () => api.get('admin/backups'),
+  createBackup: (type) => api.post('admin/backups/create', { backup_type: type }),
+  restoreBackup: (filename) => api.post('admin/backups/restore', { filename }),
+  deleteBackup: (filename) => api.delete(`admin/backups/${filename}`),
+  getSupportTickets: (status) => api.get('admin/support', { params: { status } }),
+  getSupportTicket: (id) => api.get(`admin/support/${id}`),
+  replySupportTicket: (id, message) => api.post(`admin/support/${id}/reply`, { message }),
+  resolveSupportTicket: (id) => api.patch(`admin/support/${id}/resolve`),
+  getRefunds: (status) => api.get('admin/refunds', { params: { status } }),
+  approveRefund: (id) => api.patch(`admin/refunds/${id}/approve`),
+  rejectRefund: (id) => api.patch(`admin/refunds/${id}/reject`)
+};
+
 export const notifications = {
   getAll: () => api.get('notifications'),
   markAsRead: (id) => api.patch(`notifications/${id}/read`),
@@ -141,9 +158,8 @@ export const analytics = {
   getCouponsStats: () => api.get('admin/coupons/stats'),
   getWishlistStats: () => api.get('admin/wishlist/stats'),
   getSearchStats: () => api.get('admin/search/stats'),
-};
-
-export const adminFeatures = {
+  getAbandonedCarts: () => api.get('admin/abandoned-carts'),
+  getAIRecommendations: () => api.get('admin/ai/recommendations'),
   getBackups: () => api.get('admin/backups'),
   createBackup: (type) => api.post('admin/backups/create', { backup_type: type }),
   restoreBackup: (filename) => api.post('admin/backups/restore', { filename }),
@@ -157,7 +173,7 @@ export const adminFeatures = {
   rejectRefund: (id) => api.patch(`admin/refunds/${id}/reject`),
   getVendors: () => api.get('admin/vendors'),
   approveVendor: (id) => api.patch(`admin/vendors/${id}/approve`),
-  rejectVendor: (id) => api.patch(`admin/vendors/${id}/reject`),
+  rejectVendor: (id) => api.patch(`admin/vendors/${id}/reject`)
 };
 
 export const security = {

@@ -13,20 +13,11 @@ const AbandonedCarts = () => {
   useEffect(() => {
     const fetchAbandonedCarts = async () => {
       try {
-        // Note: Backend doesn't have an abandoned carts endpoint yet
-        // This would require tracking cart abandonment in the database
-        // For now, we use mock data as this is a demo feature
-        // In production, this would call an API endpoint like analytics.getAbandonedCarts()
-        const mockCarts = [
-          { id: 1, user: 'Ali Karimov', email: 'ali@example.com', items: [{ name: 'iPhone 14 Pro', price: 12000000, quantity: 1 }], total: 12000000, abandoned_at: '2024-01-15T10:30:00', recovery_sent: false },
-          { id: 2, user: 'Nigora Rahimova', email: 'nigora@example.com', items: [{ name: 'AirPods Pro', price: 2500000, quantity: 2 }], total: 5000000, abandoned_at: '2024-01-14T15:45:00', recovery_sent: true },
-          { id: 3, user: 'Jamshid Toshmatov', email: 'jamshid@example.com', items: [{ name: 'MacBook Air', price: 15000000, quantity: 1 }, { name: 'iPhone 13', price: 8000000, quantity: 1 }], total: 23000000, abandoned_at: '2024-01-13T09:20:00', recovery_sent: false },
-          { id: 4, user: 'Zarina Nazarova', email: 'zarina@example.com', items: [{ name: 'Apple Watch', price: 3000000, quantity: 1 }], total: 3000000, abandoned_at: '2024-01-12T14:00:00', recovery_sent: true },
-          { id: 5, user: 'Sobir Qodirov', email: 'sobir@example.com', items: [{ name: 'iPad Pro', price: 7500000, quantity: 1 }], total: 7500000, abandoned_at: '2024-01-10T11:30:00', recovery_sent: false }
-        ];
-        setCarts(mockCarts);
+        const res = await analytics.getAbandonedCarts();
+        setCarts(res.data);
       } catch (err) {
         console.error('Failed to fetch abandoned carts:', err);
+        setCarts([]);
       } finally {
         setLoading(false);
       }

@@ -12,35 +12,11 @@ const AI = () => {
   useEffect(() => {
     const fetchAIRecommendations = async () => {
       try {
-        // Note: Backend doesn't have an AI endpoint yet
-        // This would require ML/AI service integration
-        // For now, we use mock data as this is a demo feature
-        // In production, this would call an AI API endpoint
-        setRecommendations({
-          trendingProducts: [
-            { id: 1, name: 'iPhone 14 Pro', reason: 'Sotuvlar 45% oshdi', action: 'increase', confidence: 92 },
-            { id: 2, name: 'AirPods Pro', reason: 'Yozgi mavsumga tayyor', action: 'stock', confidence: 88 },
-            { id: 3, name: 'MacBook Air', reason: 'Talab yuqori', action: 'maintain', confidence: 75 }
-          ],
-          priceSuggestions: [
-            { id: 1, name: 'Samsung Galaxy S23', currentPrice: 11000000, suggestedPrice: 10500000, reason: 'Raqobatchilar narxni tushirdi', action: 'decrease' },
-            { id: 2, name: 'Sony WH-1000XM5', currentPrice: 4500000, suggestedPrice: 4800000, reason: 'Talab oshmoqda', action: 'increase' },
-            { id: 3, name: 'iPad Pro', currentPrice: 7500000, suggestedPrice: 7200000, reason: 'Yangi model chiqishi yaqin', action: 'decrease' }
-          ],
-          categoryInsights: [
-            { category: 'Telefonlar', growth: '+25%', trend: 'up', recommendation: 'Ko\'proq assortiment qo\'shing' },
-            { category: 'Aksessuarlar', growth: '+18%', trend: 'up', recommendation: 'Promo kodlar ishlating' },
-            { category: 'Kompyuterlar', growth: '-5%', trend: 'down', recommendation: 'Narxlarni tushiring' },
-            { category: 'Smart soatlar', growth: '+32%', trend: 'up', recommendation: 'Yangi brendlar qo\'shing' }
-          ],
-          inventoryAlerts: [
-            { product: 'iPhone 14 Pro', currentStock: 15, predictedDemand: 50, urgency: 'high' },
-            { product: 'AirPods Pro', currentStock: 45, predictedDemand: 60, urgency: 'medium' },
-            { product: 'MacBook Air', currentStock: 8, predictedDemand: 30, urgency: 'high' }
-          ]
-        });
+        const res = await analytics.getAIRecommendations();
+        setRecommendations(res.data);
       } catch (err) {
         console.error('Failed to fetch AI recommendations:', err);
+        setRecommendations(null);
       } finally {
         setLoading(false);
       }

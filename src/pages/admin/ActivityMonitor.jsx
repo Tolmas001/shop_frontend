@@ -14,9 +14,6 @@ const ActivityMonitor = () => {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        // Note: Backend doesn't have a dedicated activity logs endpoint for all admin activities
-        // Using security.getLogins as a fallback which returns login-related activity logs
-        // For full functionality, backend needs to add an activity logs endpoint
         const res = await security.getLogins(50);
         
         // Transform login logs to match frontend structure
@@ -33,15 +30,7 @@ const ActivityMonitor = () => {
         setActivities(activities);
       } catch (err) {
         console.error('Failed to fetch activities:', err);
-        // Fallback to mock data if API fails
-        const mockActivities = [
-          { id: 1, admin: 'Ali Karimov', action: 'created', entity: 'product', details: 'iPhone 14 Pro', timestamp: '2024-01-15T14:30:00', ip: '192.168.1.100' },
-          { id: 2, admin: 'Nigora Rahimova', action: 'approved', entity: 'payment', details: 'Order #12345', timestamp: '2024-01-15T14:15:00', ip: '192.168.1.101' },
-          { id: 3, admin: 'Jamshid Toshmatov', action: 'deleted', entity: 'category', details: 'Old Electronics', timestamp: '2024-01-15T13:45:00', ip: '192.168.1.102' },
-          { id: 4, admin: 'Zarina Nazarova', action: 'updated', entity: 'product', details: 'AirPods Pro price', timestamp: '2024-01-15T12:30:00', ip: '192.168.1.103' },
-          { id: 5, admin: 'Sobir Qodirov', action: 'rejected', entity: 'refund', details: 'Order #12346', timestamp: '2024-01-15T11:15:00', ip: '192.168.1.104' }
-        ];
-        setActivities(mockActivities);
+        setActivities([]);
       } finally {
         setLoading(false);
       }

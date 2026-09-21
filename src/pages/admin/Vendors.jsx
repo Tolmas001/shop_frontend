@@ -14,18 +14,11 @@ const Vendors = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        // Note: Backend doesn't have a vendors endpoint yet, so we'll use mock data
-        // This is a placeholder for when the backend endpoint is implemented
-        const mockVendors = [
-          { id: 1, name: 'TechStore LLC', email: 'techstore@example.com', products: 45, earnings: 45000000, status: 'approved', joined_at: '2024-01-10', rating: 4.8 },
-          { id: 2, name: 'Mobile World', email: 'mobileworld@example.com', products: 32, earnings: 32000000, status: 'approved', joined_at: '2024-01-08', rating: 4.5 },
-          { id: 3, name: 'Electronics Hub', email: 'electronicshub@example.com', products: 0, earnings: 0, status: 'pending', joined_at: '2024-01-15', rating: 0 },
-          { id: 4, name: 'Gadget Pro', email: 'gadgetpro@example.com', products: 28, earnings: 28000000, status: 'approved', joined_at: '2024-01-05', rating: 4.7 },
-          { id: 5, name: 'Smart Devices', email: 'smartdevices@example.com', products: 0, earnings: 0, status: 'rejected', joined_at: '2024-01-12', rating: 0 }
-        ];
-        setVendors(mockVendors);
+        const res = await adminFeatures.getVendors();
+        setVendors(res.data);
       } catch (err) {
         console.error('Failed to fetch vendors:', err);
+        setVendors([]);
       } finally {
         setLoading(false);
       }

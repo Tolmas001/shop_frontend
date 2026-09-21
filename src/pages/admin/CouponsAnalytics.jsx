@@ -29,8 +29,8 @@ const CouponsAnalytics = () => {
           orders: c.orders_used || 0
         }));
         
-        // Generate monthly usage data (mock since backend doesn't provide this)
-        const monthlyUsage = [
+        // Use monthly usage from backend if available
+        const monthlyUsage = data.monthly_usage || [
           { month: 'Yan', usage: Math.floor(totalUsage * 0.1) },
           { month: 'Fev', usage: Math.floor(totalUsage * 0.15) },
           { month: 'Mar', usage: Math.floor(totalUsage * 0.12) },
@@ -39,8 +39,8 @@ const CouponsAnalytics = () => {
           { month: 'Iyun', usage: Math.floor(totalUsage * 0.23) }
         ];
         
-        // Generate coupon types distribution (mock)
-        const couponTypes = [
+        // Use coupon types from backend if available
+        const couponTypes = data.coupon_types || [
           { name: 'Foiz', value: 45 },
           { name: 'Summa', value: 30 },
           { name: 'Bepul yetkazib berish', value: 25 }

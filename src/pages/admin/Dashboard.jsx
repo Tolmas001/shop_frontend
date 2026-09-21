@@ -233,22 +233,6 @@ const AdminDashboard = () => {
               <h1 style={{ fontSize: '28px', fontWeight: 800, margin: 0, color: 'var(--text-main)' }}>Xush kelibsiz, {user?.username}</h1>
               <p style={{ color: '#64748B', marginTop: '4px', fontSize: '15px' }}>Bugungi holat va statistikani kuzatib boring.</p>
             </motion.div>
-            <button
-              className="btn btn-secondary"
-              style={{ borderRadius: '14px', fontSize: '14px', padding: '12px 24px' }}
-              onClick={async () => {
-                try {
-                  const { demo } = await import('../../services/api');
-                  await demo.seed();
-                  alert('Demo ma`lumotlar muvaffaqiyatli yaratildi!');
-                  window.location.reload();
-                } catch (e) {
-                  alert('Xatolik: ' + e.message);
-                }
-              }}
-            >
-              Demo Ma'lumot Qushish
-            </button>
           </div>
 
           <Routes>
