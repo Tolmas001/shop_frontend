@@ -14,7 +14,7 @@ const Skeleton = ({ type, height, width, borderRadius, style }) => {
         ...style 
       }}
     >
-      <div className="skeleton-shimmer"></div>
+      <div className="skeleton-shimmer animated"></div>
     </div>
   );
 };

@@ -23,10 +23,34 @@ export const CartProvider = ({ children }) => {
       return [];
     }
   });
+  const [comparisonList, setComparisonList] = useState(() => {
+    try {
+      const saved = localStorage.getItem('comparisonList');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+  const [recentlyViewed, setRecentlyViewed] = useState(() => {
+    try {
+      const saved = localStorage.getItem('recentlyViewed');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
+
+  useEffect(() => {
+    localStorage.setItem('comparisonList', JSON.stringify(comparisonList));
+  }, [comparisonList]);
+
+  useEffect(() => {
+    localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+  }, [recentlyViewed]);
 
   const addToCart = (product, selectedColor, selectedSize, quantity = 1) => {
     const variant = `${selectedColor}-${selectedSize}`;
@@ -47,6 +71,40 @@ export const CartProvider = ({ children }) => {
         return prev.filter(item => item.id !== product.id);
       }
       return [...prev, product];
+    });
+  };
+
+  const addToComparison = (product) => {
+    setComparisonList(prev => {
+      if (prev.length >= 4) {
+        showNotification('Maksimal 4 ta mahsulot solishtirish mumkin');
+        return prev;
+      }
+      const isExist = prev.find(item => item.id === product.id);
+      if (isExist) {
+        showNotification('Bu mahsulot allaqachon solishtirish ro\'yxatida');
+        return prev;
+      }
+      return [...prev, product];
+    });
+  };
+
+  const removeFromComparison = (productId) => {
+    setComparisonList(prev => prev.filter(item => item.id !== productId));
+  };
+
+  const clearComparison = () => {
+    setComparisonList([]);
+  };
+
+  const addToRecentlyViewed = (product) => {
+    setRecentlyViewed(prev => {
+      const isExist = prev.find(item => item.id === product.id);
+      if (isExist) {
+        return prev.filter(item => item.id !== product.id);
+      }
+      const updated = [product, ...prev].slice(0, 10); // Keep only last 10
+      return updated;
     });
   };
 
@@ -94,7 +152,9 @@ export const CartProvider = ({ children }) => {
       favorites, toggleFavorite, clearFavorites,
       quickViewProduct, setQuickViewProduct,
       appliedPromo, applyPromoCode, usePoints, setUsePoints,
-      handleImageError
+      handleImageError,
+      comparisonList, addToComparison, removeFromComparison, clearComparison,
+      recentlyViewed, addToRecentlyViewed
     }}>
       {children}
     </CartContext.Provider>

@@ -27,6 +27,8 @@ import PaymentRejected from './pages/PaymentRejected';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
+import BottomNav from './components/BottomNav';
+import ProductComparison from './components/ProductComparison';
 import { useApp } from './hooks/useApp';
 import { AnimatePresence } from 'framer-motion';
 import QuickView from './components/QuickView';
@@ -87,6 +89,8 @@ function MainLayout() {
         <Route path="*" element={<ErrorPage status={404} />} />
       </Routes>
       <Footer />
+      <BottomNav />
+      <ProductComparison />
 
       <AnimatePresence>
         {quickViewProduct && (

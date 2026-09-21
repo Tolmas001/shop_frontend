@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
+import Breadcrumb from '../components/Breadcrumb';
 import { products } from '../services/api';
 import { useApp } from '../hooks/useApp';
 import Skeleton from '../components/Skeleton';
@@ -116,6 +117,9 @@ const Products = () => {
 
   return (
     <div className="container" style={{ padding: '40px 0' }}>
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb />
+      
       {/* Filter Overlay (Fixed position, stays outside grid) */}
       <div 
         className={`filter-overlay ${showMobileFilters ? 'open' : ''}`}

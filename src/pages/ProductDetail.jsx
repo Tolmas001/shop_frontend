@@ -21,7 +21,7 @@ import {
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { user, addToCart, t, backendUrl, handleImageError, formatPrice } = useApp();
+  const { user, addToCart, t, backendUrl, handleImageError, formatPrice, addToRecentlyViewed } = useApp();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -45,6 +45,9 @@ const ProductDetail = () => {
         setSelectedColor(res.data.colors?.[0] || null);
         setSelectedSize(res.data.sizes?.[0] || null);
         
+        // Add to recently viewed
+        addToRecentlyViewed(res.data);
+        
         // Fetch related products
         api.getAll({ category: res.data.category })
           .then(related => {
@@ -53,7 +56,7 @@ const ProductDetail = () => {
       })
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, addToRecentlyViewed]);
 
   const handleAddToCart = () => {
     if (!product || product.stock_count < 1) return;

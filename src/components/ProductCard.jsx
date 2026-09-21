@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 const ProductCard = ({ product, onLike, onComment }) => {
-  const { user, addToCart, setQuickViewProduct, showNotification, favorites, toggleFavorite, t, backendUrl, handleImageError, formatPrice } = useApp();
+  const { user, addToCart, setQuickViewProduct, showNotification, favorites, toggleFavorite, t, backendUrl, handleImageError, formatPrice, addToComparison } = useApp();
   const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || null);
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || null);
   const [showCommentModal, setShowCommentModal] = useState(false);
@@ -25,6 +25,7 @@ const ProductCard = ({ product, onLike, onComment }) => {
   const [likesCount, setLikesCount] = useState(product.likes?.length || 0);
   const [isAdding, setIsAdding] = useState(false);
   const [commentImage, setCommentImage] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleLike = async (e) => {
     e.preventDefault();
@@ -88,6 +89,11 @@ const ProductCard = ({ product, onLike, onComment }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+        role="article"
+        aria-label={`${product.name} - ${formatPrice(product.price)}`}
+        tabIndex="0"
       >
         <div className="product-image-wrap">
           <Link to={`/product/${product.id}`}>
@@ -97,10 +103,18 @@ const ProductCard = ({ product, onLike, onComment }) => {
               className="product-img" 
               onError={handleImageError}
               loading="lazy"
+              decoding="async"
+              fetchpriority="low"
             />
           </Link>
           
-          <div className="product-badge">New</div>
+          <div className={`product-badge ${product.badge || 'new'}`}>
+            {product.badge === 'hot' ? '🔥 Hot' : 
+             product.badge === 'sale' ? '💰 Sale' : 
+             product.badge === 'limited' ? '⏰ Limited' : 
+             product.badge === 'best-seller' ? '⭐ Best Seller' : 
+             product.badge === 'new' ? '✨ New' : 'New'}
+          </div>
           
           <div className="product-action-btns mobile-actions-visible">
             <motion.button 
@@ -120,6 +134,15 @@ const ProductCard = ({ product, onLike, onComment }) => {
               title={t('comments')}
             >
               <MessageSquare size={20} />
+            </motion.button>
+            <motion.button 
+              className="product-card-btn"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToComparison(product); }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              title="Solishtirish"
+            >
+              <CheckCircle2 size={20} />
             </motion.button>
             <button 
               className="product-card-btn show-desktop" 
@@ -148,9 +171,17 @@ const ProductCard = ({ product, onLike, onComment }) => {
           </Link>
           
           <div className="product-rating">
-            <div style={{ display: 'flex', gap: '2px' }}>
+            <div style={{ display: 'flex', gap: '2px' }} title={`${4}/5 stars based on ${likesCount} reviews`}>
               {[1, 2, 3, 4, 5].map(i => (
-                <Star key={i} size={14} fill={i <= 4 ? "#F59E0B" : "none"} color={i <= 4 ? "#F59E0B" : "#D1D5DB"} />
+                <Star 
+                  key={i} 
+                  size={14} 
+                  fill={i <= 4 ? "#F59E0B" : "none"} 
+                  color={i <= 4 ? "#F59E0B" : "#D1D5DB"}
+                  style={{ cursor: 'pointer', transition: 'transform 0.2s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
               ))}
             </div>
             <span style={{ fontSize: '14px', color: '#6B7280' }}>({likesCount})</span>
@@ -183,7 +214,11 @@ const ProductCard = ({ product, onLike, onComment }) => {
           
           <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px' }}>
              {product.stock_count > 0 ? (
-               <><CheckCircle2 size={14} color="#10B981" /> <span style={{color: '#10B981'}}>{t('in_stock')}</span></>
+               product.stock_count < 5 ? (
+                 <><CheckCircle2 size={14} color="#F59E0B" /> <span style={{color: '#F59E0B'}}>Jami {product.stock_count} ta qoldi</span></>
+               ) : (
+                 <><CheckCircle2 size={14} color="#10B981" /> <span style={{color: '#10B981'}}>{t('in_stock')}</span></>
+               )
              ) : (
                <><XCircle size={14} color="#EF4444" /> <span style={{color: '#EF4444'}}>{t('out_of_stock')}</span></>
              )}
